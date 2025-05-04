@@ -1,0 +1,144 @@
+{
+  "version": 3,
+  "targets": {
+    "net9.0": {
+      "SafeEntry.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "SafeEntry.Contracts": "1.0.0",
+          "SafeEntry.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SafeEntry.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SafeEntry.Application.dll": {}
+        }
+      },
+      "SafeEntry.Contracts/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/SafeEntry.Contracts.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SafeEntry.Contracts.dll": {}
+        }
+      },
+      "SafeEntry.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/SafeEntry.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SafeEntry.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SafeEntry.Application/1.0.0": {
+      "type": "project",
+      "path": "../SafeEntry.Application/SafeEntry.Application.csproj",
+      "msbuildProject": "../SafeEntry.Application/SafeEntry.Application.csproj"
+    },
+    "SafeEntry.Contracts/1.0.0": {
+      "type": "project",
+      "path": "../SafeEntry.Contracts/SafeEntry.Contracts.csproj",
+      "msbuildProject": "../SafeEntry.Contracts/SafeEntry.Contracts.csproj"
+    },
+    "SafeEntry.Domain/1.0.0": {
+      "type": "project",
+      "path": "../SafeEntry.Domain/SafeEntry.Domain.csproj",
+      "msbuildProject": "../SafeEntry.Domain/SafeEntry.Domain.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net9.0": [
+      "SafeEntry.Application >= 1.0.0",
+      "SafeEntry.Contracts >= 1.0.0",
+      "SafeEntry.Domain >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\User\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "D:\\PI\\safeEntry\\src\\SafeEntry.Infrastructure\\SafeEntry.Infrastructure.csproj",
+      "projectName": "SafeEntry.Infrastructure",
+      "projectPath": "D:\\PI\\safeEntry\\src\\SafeEntry.Infrastructure\\SafeEntry.Infrastructure.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "D:\\PI\\safeEntry\\src\\SafeEntry.Infrastructure\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net9.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "projectReferences": {
+            "D:\\PI\\safeEntry\\src\\SafeEntry.Application\\SafeEntry.Application.csproj": {
+              "projectPath": "D:\\PI\\safeEntry\\src\\SafeEntry.Application\\SafeEntry.Application.csproj"
+            },
+            "D:\\PI\\safeEntry\\src\\SafeEntry.Contracts\\SafeEntry.Contracts.csproj": {
+              "projectPath": "D:\\PI\\safeEntry\\src\\SafeEntry.Contracts\\SafeEntry.Contracts.csproj"
+            },
+            "D:\\PI\\safeEntry\\src\\SafeEntry.Domain\\SafeEntry.Domain.csproj": {
+              "projectPath": "D:\\PI\\safeEntry\\src\\SafeEntry.Domain\\SafeEntry.Domain.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.100"
+    },
+    "frameworks": {
+      "net9.0": {
+        "targetAlias": "net9.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
