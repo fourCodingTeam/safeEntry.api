@@ -2,12 +2,13 @@
 using SafeEntry.Domain.Entities;
 using SafeEntry.Domain.Repositories;
 using SafeEntry.Infrastructure.Data;
+using SafeEntry.Infrastructure.Models;
 
 namespace SafeEntry.Infrastructure.Repositories
 {
     public class InviteRepository : IInviteRepository
     {
-        private readonly IMongoCollection<Invite> _invites;
+        private readonly IMongoCollection<InviteMongoDbModel> _invites;
 
         public InviteRepository(MongoDbContext context)
         {
@@ -16,14 +17,16 @@ namespace SafeEntry.Infrastructure.Repositories
 
         public async Task AddAsync(Invite invite)
         {
-            await _invites.InsertOneAsync(invite);
+            var mongoInvite = InviteMongoDbModel.FromDomain(invite);
+
+            await _invites.InsertOneAsync(mongoInvite);
         }
 
         public async Task<bool> ExistsCodeForResidentAsync(int residentId, int code)
         {
-            var filter = Builders<Invite>.Filter.And(
-                Builders<Invite>.Filter.Eq(x => x.ResidentId, residentId),
-                Builders<Invite>.Filter.Eq(x => x.Code, code)
+            var filter = Builders<InviteMongoDbModel>.Filter.And(
+                Builders<InviteMongoDbModel>.Filter.Eq(x => x.ResidentId, residentId),
+                Builders<InviteMongoDbModel>.Filter.Eq(x => x.Code, code)
             );
 
             return await _invites.Find(filter).AnyAsync();
@@ -31,10 +34,10 @@ namespace SafeEntry.Infrastructure.Repositories
 
         public async Task<bool> ValidateCodeAsync(int residentId, int visitorId, int code)
         {
-            var filter = Builders<Invite>.Filter.And(
-                Builders<Invite>.Filter.Eq(x => x.ResidentId, residentId),
-                Builders<Invite>.Filter.Eq(x => x.VisitorId, visitorId),
-                Builders<Invite>.Filter.Eq(x => x.Code, code)
+            var filter = Builders<InviteMongoDbModel>.Filter.And(
+                Builders<InviteMongoDbModel>.Filter.Eq(x => x.ResidentId, residentId),
+                Builders<InviteMongoDbModel>.Filter.Eq(x => x.VisitorId, visitorId),
+                Builders<InviteMongoDbModel>.Filter.Eq(x => x.Code, code)
             );
 
             var invite = await _invites.Find(filter).FirstOrDefaultAsync();

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
-using SafeEntry.Domain.Entities;
+using SafeEntry.Infrastructure.Models;
 
 namespace SafeEntry.Infrastructure.Data
 {
@@ -14,6 +14,6 @@ namespace SafeEntry.Infrastructure.Data
             _database = client.GetDatabase("SafeEntry");
         }
 
-        public IMongoCollection<Invite> Invites => _database.GetCollection<Invite>("Invites");
+        public IMongoCollection<InviteMongoDbModel> Invites => _database.GetCollection<InviteMongoDbModel>("Invites");
     }
 }
