@@ -1,0 +1,52 @@
+## Ignore build results
+bin/
+obj/
+out/
+
+## User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+## OS-generated files
+.DS_Store
+Thumbs.db
+
+## Rider
+.idea/
+
+## VS Code
+.vscode/
+.vs/
+
+## ASP.NET
+appsettings.*.json
+
+## Logs
+*.log
+
+## NuGet
+*.nupkg
+packages/
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Visual Studio cache
+.vs/
+.vsconfig
+
+## Test results
+TestResults/
+*.coverage
+*.coveragejson
+*.trx
+
+## Others
+Generated_Code/
+
+# dotenv environment variables
+.env
+.env.*
