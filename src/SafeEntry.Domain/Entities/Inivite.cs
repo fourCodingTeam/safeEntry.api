@@ -2,7 +2,6 @@
 
 public class Invite
 {
-    public int Id { get; protected set; }
     public int Code { get; protected set; }
     public int ResidentId { get; protected set; }
     public int VisitorId {  get; protected set; }
