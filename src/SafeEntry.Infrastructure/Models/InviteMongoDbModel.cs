@@ -2,8 +2,8 @@
 using MongoDB.Bson;
 using SafeEntry.Domain.Entities;
 
-namespace SafeEntry.Infrastructure.Models
-{
+namespace SafeEntry.Infrastructure.Models;
+
     public class InviteMongoDbModel
     {
         [BsonId]
@@ -36,4 +36,4 @@ namespace SafeEntry.Infrastructure.Models
             return new Invite(Code, ResidentId, VisitorId, StartDate, ExpirationDate, Justification ?? string.Empty);
         }
     }
-}
+

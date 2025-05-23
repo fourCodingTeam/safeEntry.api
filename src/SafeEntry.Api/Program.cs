@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IInviteRepository, InviteRepository>();
 builder.Services.AddScoped<IInviteService, InviteService>();
+builder.Services.AddScoped<IVisitorRespository, VisitorRepository>();
 builder.Services.AddControllers();
 
 // Configuração do PostgreSQL
