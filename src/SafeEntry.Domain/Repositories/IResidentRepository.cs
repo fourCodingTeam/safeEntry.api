@@ -1,6 +1,6 @@
-﻿namespace SafeEntry.Domain.Repositories;
+﻿using SafeEntry.Domain.Entities;
 
-using SafeEntry.Domain.Entities;
+namespace SafeEntry.Domain.Repositories;
 
 public interface IResidentRespository
 {
