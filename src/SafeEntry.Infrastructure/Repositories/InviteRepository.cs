@@ -32,20 +32,22 @@ public class InviteRepository : IInviteRepository
         return await _invites.Find(filter).AnyAsync();
     }
 
-    public async Task<bool> ValidateCodeAsync(int residentId, int visitorId, int code)
+    public async Task<bool> ValidateCodeAsync(int residentId, int visitorId, int code, DateTime dateNow)
     {
         var filter = BuildInviteFilter(residentId, visitorId, code);
 
         var invite = await _invites.Find(filter).FirstOrDefaultAsync();
 
-        return invite != null && invite.ExpirationDate > DateTime.UtcNow;
+        if (invite == null)
+            throw new Exception("Invite not found");
+
+        return invite.IsActive && invite.ExpirationDate > dateNow;
     }
 
     public async Task<IEnumerable<Invite>> GetInvitesByResidentIdAsync(int residentId)
     {
         return (await _invites.Find(x => x.ResidentId == residentId).ToListAsync())
-            .Select(mongoInvite => mongoInvite.ToDomain())
-            .ToList();
+            .Select(mongoInvite => mongoInvite.ToDomain());
     }
 
     public async Task<Invite> GetInviteByResidentIdAndVisitorIdAsync(int residentId, int visitorId, int code)
@@ -55,7 +57,7 @@ public class InviteRepository : IInviteRepository
         var mongoInvite = await _invites.Find(filter).FirstOrDefaultAsync();
 
         if (mongoInvite == null)
-            throw new Exception("Invite not found");
+            throw new KeyNotFoundException("Invite not found");
 
         return mongoInvite.ToDomain();
     }
