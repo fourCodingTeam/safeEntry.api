@@ -12,4 +12,5 @@ public class ValidateInviteRequest
     public int ResidentId { get; set; }
     public int VisitorId { get; set; }
     public int Code { get; set; }
+    public DateTime DateNow { get; protected set; }
 }

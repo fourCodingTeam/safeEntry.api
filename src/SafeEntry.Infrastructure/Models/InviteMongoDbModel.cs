@@ -16,6 +16,7 @@ namespace SafeEntry.Infrastructure.Models;
         public DateTime StartDate { get; set; }
         public DateTime ExpirationDate { get; set; }
         public string? Justification { get; set; }
+        public bool IsActive { get; set; }
 
         public static InviteMongoDbModel FromDomain(Invite invite)
         {
@@ -28,6 +29,7 @@ namespace SafeEntry.Infrastructure.Models;
                 StartDate = invite.StartDate,
                 ExpirationDate = invite.ExpirationDate,
                 Justification = invite.Justification,
+                IsActive = invite.IsActive
             };
         }
 

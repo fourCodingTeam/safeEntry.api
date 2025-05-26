@@ -8,5 +8,5 @@ public interface IInviteService
     Task<int> GenerateCodeAsync(GenerateInviteRequest request);
     Task<bool> ValidateCodeAsync(ValidateInviteRequest request);
     Task<IEnumerable<Invite>> GetInvitesByResidentIdAsync(int residentId);
-    Task<Invite> GetInviteByResidentIdAndVisitorIdAsync(ValidateInviteRequest request);
+    Task<Invite> GetInviteByResidentIdAndVisitorIdAsync(int residentId, int vistorId, int code);
 }
