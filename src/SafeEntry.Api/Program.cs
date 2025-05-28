@@ -13,9 +13,9 @@ using SafeEntry.Application.UseCases.Register;
 using SafeEntry.Application.UseCases.ListUsers;
 using SafeEntry.Application.UseCases.ListResidents;
 using SafeEntry.Application.UseCases.Residents;
-using SafeEntry.Application.UseCases.Addresses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,17 +32,13 @@ builder.Services.AddScoped<LoginHandler>();
 builder.Services.AddScoped<RegisterHandler>();
 builder.Services.AddScoped<ListUsersHandler>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
-builder.Services.AddScoped<IResidentRepository, ResidentRepository>();
 builder.Services.AddScoped<CreateResidentHandler>();
 builder.Services.AddScoped<UpdateResidentHandler>();
 builder.Services.AddScoped<DeleteResidentHandler>();
 builder.Services.AddScoped<ListResidentsHandler>();
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 
-builder.Services.AddScoped<CreateAddressHandler>();
-builder.Services.AddScoped<ListAddressesHandler>();
-builder.Services.AddScoped<UpdateAddressHandler>();
-builder.Services.AddScoped<DeleteAddressHandler>();
+
 
 
 
@@ -60,6 +56,12 @@ builder.Services.AddControllers(options =>
 // Configuração do PostgreSQL
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("SupabaseConnection")));
+builder.Services.AddScoped<IResidentRespository, ResidentRepository>();
+
+// e registre também o handler (ou use MediatR/scan de assembly)
+builder.Services.AddScoped<CreateResidentHandler>();
+builder.Services.AddScoped<ListResidentsHandler>();
+
 
 // Configuração do MongoDB
 builder.Services.AddSingleton<IMongoClient, MongoClient>(sp =>
@@ -70,18 +72,41 @@ builder.Services.AddSingleton<MongoDbContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "SafeEntry API", Version = "v1" });
+c.SwaggerDoc("v1", new OpenApiInfo { Title = "SafeEntry API", Version = "v1" });
+var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
+
+c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+{
+    Name = "Authorization",
+    In = ParameterLocation.Header,
+    Type = SecuritySchemeType.Http,
+    Scheme = "Bearer",
+    BearerFormat = "JWT",
+    Description = "Informe ‘Bearer {token}’"
 });
 
+c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme {
+                Reference = new OpenApiReference {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 // Configuração do JWT Authentication
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = "Bearer";  // Esquema de autenticação
-    options.DefaultChallengeScheme = "Bearer";    // Desafio de autenticação
+    options.DefaultAuthenticateScheme = "Bearer"; 
+    options.DefaultChallengeScheme = "Bearer";   
 })
 .AddJwtBearer(options =>
 {
-    options.RequireHttpsMetadata = false;  // Durante o desenvolvimento
+    options.RequireHttpsMetadata = false;  
     options.SaveToken = true;
     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
     {
@@ -89,10 +114,10 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],  // Definido no .env ou appsettings
-        ValidAudience = builder.Configuration["Jwt:Audience"],  // Definido no .env ou appsettings
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],  
+        ValidAudience = builder.Configuration["Jwt:Audience"],  
         IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(
-            System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])  // Sua chave JWT
+            System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])  
         ),
     };
 });

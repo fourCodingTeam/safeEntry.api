@@ -9,31 +9,19 @@ namespace SafeEntry.Application.UseCases.Residents
 {
     public class CreateResidentHandler
     {
-        private readonly IResidentRepository _repo;
-        public CreateResidentHandler(IResidentRepository repo) => _repo = repo;
+        private readonly IResidentRespository _repo;
+        public CreateResidentHandler(IResidentRespository repo) => _repo = repo;
 
         public async Task<ResidentResponse> Handle(CreateResidentRequest req)
         {
-            var address = new Address(
-                req.Street, req.Number, req.Neighborhood,
-                req.ZipCode, req.City, req.State, req.Country);
-            var resident = new Resident(req.Name, req.PhoneNumber, address);
+            
+            var resident = new Resident(req.Name, req.PhoneNumber);
             await _repo.AddAsync(resident);
 
             return new ResidentResponse(
                 resident.Id,
                 resident.Name,
-                resident.PhoneNumber,
-                new AddressResponse(
-                    address.Id,
-                    address.Street,
-                    address.Number,
-                    address.Neighborhood,
-                    address.ZipCode,
-                    address.City,
-                    address.State,
-                    address.Country
-                )
+                resident.PhoneNumber
             );
         }
     }

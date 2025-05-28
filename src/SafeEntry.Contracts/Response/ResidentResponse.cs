@@ -3,7 +3,6 @@
     public record ResidentResponse(
         int Id,
         string Name,
-        long PhoneNumber,
-        AddressResponse Address
+        long PhoneNumber
     );
 }

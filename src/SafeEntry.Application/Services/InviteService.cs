@@ -47,16 +47,13 @@ public class InviteService : IInviteService
         var residentId = request.ResidentId;
         var vistorId = request.VisitorId;
         var code = request.Code;
+        var dateNow = request.DateNow;
 
-        return await _inviteRepository.ValidateCodeAsync(residentId, vistorId, code);
+        return await _inviteRepository.ValidateCodeAsync(residentId, vistorId, code, dateNow);
     }
 
-    public async Task<Invite> GetInviteByResidentIdAndVisitorIdAsync(ValidateInviteRequest request)
+    public async Task<Invite> GetInviteByResidentIdAndVisitorIdAsync(int residentId, int vistorId, int code)
     {
-        var residentId = request.ResidentId;
-        var vistorId = request.VisitorId;
-        var code = request.Code;
-
         return await _inviteRepository.GetInviteByResidentIdAndVisitorIdAsync(residentId, vistorId, code);
     }
 

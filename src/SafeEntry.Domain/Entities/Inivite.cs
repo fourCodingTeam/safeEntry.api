@@ -9,6 +9,7 @@ public class Invite
     public DateTime StartDate { get; protected set; }
     public DateTime ExpirationDate { get; protected set; }
     public string? Justification { get; protected set; } = null!;
+    public bool IsActive { get; protected set; }
 
     protected Invite() { }
 
@@ -21,5 +22,6 @@ public class Invite
         StartDate = start;
         ExpirationDate = expiration;
         Justification = justification;
+        IsActive = true;
     }
 }

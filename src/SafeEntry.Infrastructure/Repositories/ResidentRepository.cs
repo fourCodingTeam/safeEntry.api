@@ -3,7 +3,7 @@ using SafeEntry.Domain.Repositories;
 using SafeEntry.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-public class ResidentRepository : IResidentRepository
+public class ResidentRepository : IResidentRespository
 {
     private readonly AppDbContext _ctx;
     public ResidentRepository(AppDbContext ctx) => _ctx = ctx;
@@ -22,7 +22,7 @@ public class ResidentRepository : IResidentRepository
                .SingleOrDefaultAsync(r => r.Id == id);
 
     public async Task AddAsync(Resident resident)
-    {
+{
         _ctx.Persons.Add(resident);
         await _ctx.SaveChangesAsync();
     }

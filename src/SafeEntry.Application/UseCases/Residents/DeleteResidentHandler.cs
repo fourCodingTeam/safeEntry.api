@@ -5,8 +5,8 @@ namespace SafeEntry.Application.UseCases.Residents
 {
     public class DeleteResidentHandler
     {
-        private readonly IResidentRepository _repo;
-        public DeleteResidentHandler(IResidentRepository repo) => _repo = repo;
+        private readonly IResidentRespository _repo;
+        public DeleteResidentHandler(IResidentRespository repo) => _repo = repo;
 
         public async Task<bool> Handle(int id)
         {

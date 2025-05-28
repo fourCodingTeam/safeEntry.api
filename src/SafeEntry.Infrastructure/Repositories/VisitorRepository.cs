@@ -26,7 +26,7 @@ public class VisitorRepository : IVisitorRespository
         return await _context.Visitors.FirstOrDefaultAsync(v => v.Name == name && v.PhoneNumber == phoneNumber);
     }
 
-    async Task<Visitor> GetOrCreateAsync(string name, long phoneNumber)
+    public async Task<Visitor> GetOrCreateAsync(string name, long phoneNumber)
     {
         var existing = await GetByNameAndPhoneAsync(name, phoneNumber);
 
@@ -35,10 +35,5 @@ public class VisitorRepository : IVisitorRespository
 
         var newVisitor = new Visitor(name, phoneNumber);
         return await AddAsync(newVisitor);
-    }
-
-    Task<Visitor> IVisitorRespository.GetOrCreateAsync(string name, long phoneNumber)
-    {
-        return GetOrCreateAsync(name, phoneNumber);
     }
 }
