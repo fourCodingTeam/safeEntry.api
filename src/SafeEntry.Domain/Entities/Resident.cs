@@ -2,14 +2,13 @@
 
 public class Resident : Person
 {
-    public Address Address { get; protected set; } = null!;
-
+    public int AddressId { get; private set; } 
+    public Address Address { get; private set; }  
     protected Resident() { }
 
-    public Resident(string name, long phoneNumber, Address address)
+    public Resident(string name, long phoneNumber)
         : base(name, phoneNumber)
     {
-        Address = address ?? throw new ArgumentNullException(nameof(address));
+        
     }
-
 }
