@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using SafeEntry.Application.Interfaces;
-using SafeEntry.Contracts.Response;
+﻿using SafeEntry.Contracts.Response;
 using SafeEntry.Domain.Repositories;
 
 namespace SafeEntry.Application.UseCases.ListUsers

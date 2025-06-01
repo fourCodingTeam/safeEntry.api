@@ -13,6 +13,12 @@ public class InviteController : ControllerBase
 {
     private readonly IInviteService _inviteService;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="InviteController"/> class.
+    /// </summary>
+    /// <param name="inviteService">
+    /// The service responsible for invite-related business operations.
+    /// </param>
     public InviteController(IInviteService inviteService)
     {
         _inviteService = inviteService;

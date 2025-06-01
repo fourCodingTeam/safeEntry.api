@@ -1,4 +1,4 @@
-﻿namespace SafeEntry.Contracts.Enums;
+﻿namespace SafeEntry.Domain.Enums;
 
 public enum UserTypeEnum
 {

@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using SafeEntry.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
 using SafeEntry.Domain.Repositories;
 using SafeEntry.Infrastructure.Data;
 

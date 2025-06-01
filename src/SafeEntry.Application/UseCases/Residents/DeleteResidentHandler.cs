@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using SafeEntry.Domain.Repositories;
+﻿using SafeEntry.Domain.Repositories;
 
 namespace SafeEntry.Application.UseCases.Residents
 {

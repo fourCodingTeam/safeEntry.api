@@ -1,10 +1,12 @@
-﻿namespace SafeEntry.Contracts.Requests
+﻿namespace SafeEntry.Contracts.Request
 {
     public record CreateResidentRequest(
         string Name,
         long PhoneNumber,
         int CondominiumId,
         string? HomeStreet,
-        int HomeNumber
+        int HomeNumber,
+        string Email,
+        string Password
     );
 }
