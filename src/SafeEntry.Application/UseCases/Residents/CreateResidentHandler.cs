@@ -1,7 +1,9 @@
 ﻿using SafeEntry.Application.Interfaces;
-using SafeEntry.Contracts.Requests;
+using SafeEntry.Application.UseCases.Register;
+using SafeEntry.Contracts.Request;
 using SafeEntry.Contracts.Responses;
 using SafeEntry.Domain.Entities;
+using SafeEntry.Domain.Enums;
 using SafeEntry.Domain.Repositories;
 
 namespace SafeEntry.Application.UseCases.Residents
@@ -10,10 +12,13 @@ namespace SafeEntry.Application.UseCases.Residents
     {
         private readonly IResidentRespository _repo;
         private readonly IAddressService _addressService;
-        public CreateResidentHandler(IResidentRespository repo, IAddressService addressService)
+        private readonly RegisterHandler _registerHandler;
+
+        public CreateResidentHandler(IResidentRespository repo, IAddressService addressService, RegisterHandler registerHandler)
         {
             _repo = repo;
             _addressService = addressService;
+            _registerHandler = registerHandler;
         }
 
         public async Task<ResidentResponse> Handle(CreateResidentRequest req)
@@ -25,6 +30,10 @@ namespace SafeEntry.Application.UseCases.Residents
 
             var resident = new Resident(req.Name, req.PhoneNumber, address);
             await _repo.AddAsync(resident);
+
+            var user = new RegisterRequest(resident.Id, req.Email, req.Password, UserTypeEnum.Resident);
+
+            await _registerHandler.Handle(user);
 
             return new ResidentResponse(
                 resident.Id,

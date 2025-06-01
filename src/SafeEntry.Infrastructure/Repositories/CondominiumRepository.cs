@@ -14,7 +14,7 @@ public class CondominiumRepository : ICondominiumRepository
         _context = context;
     }
 
-    public async Task<Condominium?> GetCondominiumById(int condominiumId)
+    public async Task<Condominium?> GetCondominiumByIdAsync(int condominiumId)
     {
         return await _context.Condominiums.FirstOrDefaultAsync(a => a.Id == condominiumId);
     }

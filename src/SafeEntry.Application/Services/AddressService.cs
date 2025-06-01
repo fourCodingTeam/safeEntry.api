@@ -34,7 +34,7 @@ public class AddressService : IAddressService
         if (existing != null)
             return existing;
 
-        var condominium = await _condominiumRepository.GetCondominiumById(condominiumId);
+        var condominium = await _condominiumRepository.GetCondominiumByIdAsync(condominiumId);
 
         if(condominium == null)
             throw new ArgumentNullException("Condominium not Found");

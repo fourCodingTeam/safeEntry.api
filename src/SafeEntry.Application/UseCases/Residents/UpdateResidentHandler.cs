@@ -1,7 +1,5 @@
-﻿using System.Threading.Tasks;
-using SafeEntry.Contracts.Requests;
+﻿using SafeEntry.Contracts.Request;
 using SafeEntry.Contracts.Responses;
-using SafeEntry.Domain.Entities;
 using SafeEntry.Domain.Repositories;
 
 namespace SafeEntry.Application.UseCases.Residents

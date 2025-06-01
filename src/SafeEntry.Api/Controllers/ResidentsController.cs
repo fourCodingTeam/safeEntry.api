@@ -1,9 +1,7 @@
-﻿// src/SafeEntry.Api/Controllers/ResidentsController.cs
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SafeEntry.Application.UseCases.ListResidents;
 using SafeEntry.Application.UseCases.Residents;
-using SafeEntry.Contracts.Requests;
+using SafeEntry.Contracts.Request;
 using SafeEntry.Contracts.Responses;
 
 namespace SafeEntry.Api.Controllers

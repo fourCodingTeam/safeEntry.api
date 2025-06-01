@@ -1,4 +1,4 @@
-﻿namespace SafeEntry.Contracts.Requests;
+﻿namespace SafeEntry.Contracts.Request;
 
 public class CreateAddressRequest
 {
