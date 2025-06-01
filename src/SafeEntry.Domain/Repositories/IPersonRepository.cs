@@ -1,10 +1,8 @@
-﻿using System.Threading.Tasks;
-using SafeEntry.Domain.Entities;
+﻿using SafeEntry.Domain.Entities;
 
-namespace SafeEntry.Domain.Repositories
+namespace SafeEntry.Domain.Repositories;
+
+public interface IPersonRepository
 {
-    public interface IPersonRepository
-    {
-        Task AddAsync(Person person);
-    }
+    Task<Person?> GetByIdAsync(int personId);
 }

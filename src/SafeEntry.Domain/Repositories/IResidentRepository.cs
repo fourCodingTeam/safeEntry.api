@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using SafeEntry.Domain.Entities;
+﻿using SafeEntry.Domain.Entities;
 
 namespace SafeEntry.Domain.Repositories;
 

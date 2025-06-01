@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SafeEntry.Domain.Entities;
 using SafeEntry.Domain.Repositories;
 using SafeEntry.Infrastructure.Data;
@@ -10,10 +11,9 @@ namespace SafeEntry.Infrastructure.Repositories
         private readonly AppDbContext _ctx;
         public PersonRepository(AppDbContext ctx) => _ctx = ctx;
 
-        public async Task AddAsync(Person person)
+        public async Task<Person?> GetByIdAsync(int personId)
         {
-            _ctx.Persons.Add(person);
-            await _ctx.SaveChangesAsync();
+            return await _ctx.Persons.FirstOrDefaultAsync(p => p.Id == personId);
         }
     }
 }

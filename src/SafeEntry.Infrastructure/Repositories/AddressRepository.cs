@@ -20,4 +20,16 @@ public class AddressRepository : IAddressRepository
             .Where(x => x.Id == condominiumId)
             .ToListAsync();
     }
+
+    public async Task<Address?> GetByCondominiumIdAndNumber(int condominiumId, int homeNumber)
+    {
+        return await _context.Addresses.FirstOrDefaultAsync(a => a.Condominium.Id == condominiumId && a.HomeNumber == homeNumber);
+    }
+
+    public async Task<Address> AddAsync(Address address)
+    {
+        _context.Addresses.Add(address);
+        await _context.SaveChangesAsync();
+        return address;
+    }
 }

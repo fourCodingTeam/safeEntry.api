@@ -78,9 +78,9 @@ public class InviteController : ControllerBase
     /// <param name="code">The invite code.</param>
     /// <returns>The invite if found, otherwise a not found message.</returns>
     [HttpGet("{residentId}/{visitorId}/{code}")]
-    public async Task<IActionResult> GetInvitesByResidentIdAndVisitorId([FromRoute] int residentId, int vistorId, int code)
+    public async Task<IActionResult> GetInvitesByResidentIdAndVisitorId([FromRoute] int residentId, int visitorId, int code)
     {
-        var invite = await _inviteService.GetInviteByResidentIdAndVisitorIdAsync(residentId, vistorId, code);
+        var invite = await _inviteService.GetInviteByResidentIdAndVisitorIdAsync(residentId, visitorId, code);
 
         if (invite == null)
             return NotFound("Invite Not Found");

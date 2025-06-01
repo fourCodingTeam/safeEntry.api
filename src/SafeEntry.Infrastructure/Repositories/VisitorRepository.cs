@@ -16,7 +16,7 @@ public class VisitorRepository : IVisitorRespository
 
     public async Task<Visitor> AddAsync(Visitor visitor)
     {
-        _context.Persons.Add(visitor);
+        _context.Visitors.Add(visitor);
         await _context.SaveChangesAsync();
         return visitor;
     }

@@ -12,6 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<Visitor> Visitors { get; set; }
     public DbSet<Address> Addresses { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Condominium> Condominiums { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -19,6 +20,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Resident>().ToTable("Residents");
         modelBuilder.Entity<Employee>().ToTable("Employees");
         modelBuilder.Entity<Visitor>().ToTable("Visitors");
+        modelBuilder.Entity<Address>().ToTable("Addresses");
+        modelBuilder.Entity<Condominium>().ToTable("Condominiums");
         modelBuilder.Entity<User>(b =>
         {
             b.ToTable("Users");

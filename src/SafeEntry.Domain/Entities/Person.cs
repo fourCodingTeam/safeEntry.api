@@ -1,6 +1,6 @@
 ﻿namespace SafeEntry.Domain.Entities;
 
-public class Person
+public abstract class Person
 {
     public int Id { get; protected set; }
     public string Name { get; protected set; } = null!;
@@ -9,7 +9,7 @@ public class Person
 
     protected Person() { }
 
-    public Person(string name, long phoneNumber)
+    protected Person(string name, long phoneNumber)
     {
         Name = name;
         PhoneNumber = phoneNumber;

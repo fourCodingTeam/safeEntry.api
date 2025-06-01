@@ -1,9 +1,11 @@
-﻿namespace SafeEntry.Contracts.Request
+﻿using SafeEntry.Contracts.Enums;
+
+namespace SafeEntry.Contracts.Request
 {
     public record RegisterRequest(
-        string Name,
-        long PhoneNumber,
+        int PersonId,
         string Email,
-        string Password
+        string Password,
+        UserTypeEnum UserType
     );
 }

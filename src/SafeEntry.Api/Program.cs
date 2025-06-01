@@ -16,6 +16,7 @@ using SafeEntry.Application.UseCases.Residents;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using System.Reflection;
+using SafeEntry.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IInviteRepository, InviteRepository>();
 builder.Services.AddScoped<IInviteService, InviteService>();
 builder.Services.AddScoped<IVisitorRespository, VisitorRepository>();
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<ICondominiumRepository, CondominiumRepository>();
 
 // Registro do LoginHandler e autenticação
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -36,8 +41,6 @@ builder.Services.AddScoped<CreateResidentHandler>();
 builder.Services.AddScoped<UpdateResidentHandler>();
 builder.Services.AddScoped<DeleteResidentHandler>();
 builder.Services.AddScoped<ListResidentsHandler>();
-builder.Services.AddScoped<IAddressRepository, AddressRepository>();
-
 
 
 
@@ -74,8 +77,8 @@ builder.Services.AddSwaggerGen(c =>
 {
 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SafeEntry API", Version = "v1" });
 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
-
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
 {
     Name = "Authorization",

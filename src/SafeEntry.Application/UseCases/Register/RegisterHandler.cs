@@ -1,15 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using SafeEntry.Application.Interfaces;
-using SafeEntry.Contracts.Request; 
-using SafeEntry.Contracts.Response;  
-using SafeEntry.Domain.Repositories; 
-using SafeEntry.Domain.Entities;
-using SafeEntry.Domain.Services;
-using SafeEntry.Domain.ValueObjects;
+﻿using SafeEntry.Contracts.Enums;
 using SafeEntry.Contracts.Request;
 using SafeEntry.Contracts.Response;
+using SafeEntry.Domain.Entities;
+using SafeEntry.Domain.Repositories;
+using SafeEntry.Domain.Services;
+using SafeEntry.Domain.ValueObjects;
 
 namespace SafeEntry.Application.UseCases.Register
 {
@@ -34,8 +29,8 @@ namespace SafeEntry.Application.UseCases.Register
             if (await _userRepo.GetByEmailAsync(req.Email) is not null)
                 throw new ApplicationException("Email já cadastrado.");
 
-            var person = new Person(req.Name, req.PhoneNumber);
-            await _personRepo.AddAsync(person);
+            var person = await _personRepo.GetByIdAsync(req.PersonId);
+            if (person == null) throw new ApplicationException("Person Not Found");
 
             var pwdHash = new PasswordHash(_hasher.Hash(req.Password));
             var user = new User(req.Email, pwdHash, person);
