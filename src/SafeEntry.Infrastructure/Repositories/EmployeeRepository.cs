@@ -20,4 +20,11 @@ public class EmployeeRepository : IEmployeeRepository
             .Where(x => x.Id == id)
             .FirstOrDefaultAsync();
     }
+
+    public async Task<Employee> AddAsync(Employee employee)
+    {
+        _context.Employees .Add(employee);
+        await _context.SaveChangesAsync();
+        return employee;
+    }
 }
