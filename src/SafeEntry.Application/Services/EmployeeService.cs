@@ -1,6 +1,7 @@
 ﻿using SafeEntry.Application.Interfaces;
 using SafeEntry.Application.UseCases.Register;
 using SafeEntry.Contracts.Request;
+using SafeEntry.Contracts.Responses;
 using SafeEntry.Domain.Entities;
 using SafeEntry.Domain.Enums;
 using SafeEntry.Domain.Repositories;
@@ -20,7 +21,7 @@ public class EmployeeService : IEmployeeService
         _registerHandler = registerHandler;
     }
 
-    public async Task<Employee> AddAsync(CreateEmployeeRequest request)
+    public async Task<EmployeeResponse> AddAsync(CreateEmployeeRequest request)
     {
         var condominium = await _condominiumRepository.GetCondominiumByIdAsync(request.CondominiumId);
 
@@ -28,11 +29,11 @@ public class EmployeeService : IEmployeeService
             throw new Exception("Condominium not found");
             
         var employee = new Employee(request.Name, request.PhoneNumber, request.Position, condominium);
+        await _employeeRepository.AddAsync(employee);
 
         var user = new RegisterRequest(employee.Id, request.Email, request.Password, UserTypeEnum.Employee);
-
         await _registerHandler.Handle(user);
 
-        return employee;
+        return new EmployeeResponse(employee.Id, employee.Name, employee.Position, condominium.Name);
     }
 }

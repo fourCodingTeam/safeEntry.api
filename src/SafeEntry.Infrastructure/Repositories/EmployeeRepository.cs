@@ -17,13 +17,14 @@ public class EmployeeRepository : IEmployeeRepository
     public async Task<Employee?> GetEmployeeById(int id)
     {
         return await _context.Employees
+            .Include(e => e.Condominium)
             .Where(x => x.Id == id)
             .FirstOrDefaultAsync();
     }
 
     public async Task<Employee> AddAsync(Employee employee)
     {
-        _context.Employees .Add(employee);
+        _context.Employees.Add(employee);
         await _context.SaveChangesAsync();
         return employee;
     }

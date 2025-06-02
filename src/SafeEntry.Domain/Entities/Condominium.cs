@@ -3,6 +3,7 @@
 public class Condominium
 {
     public int Id { get; protected set; }
+    public string Name { get; set; }
     public string Street { get; protected set; } = null!;
     public int Number { get; protected set; }
     public string Neighborhood { get; protected set; } = null!;
@@ -13,9 +14,10 @@ public class Condominium
 
     public Condominium() { }
 
-    public Condominium(int id, string street, int number, string neighborhood, string zipCode, string city, string state, string country)
+    public Condominium(int id, string name, string street, int number, string neighborhood, string zipCode, string city, string state, string country)
     {
         Id = id;
+        Name = name;
         Street = street;
         Number = number;
         Neighborhood = neighborhood;

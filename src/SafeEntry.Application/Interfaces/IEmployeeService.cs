@@ -1,9 +1,9 @@
 ﻿using SafeEntry.Contracts.Request;
-using SafeEntry.Domain.Entities;
+using SafeEntry.Contracts.Responses;
 
 namespace SafeEntry.Application.Interfaces;
 
 public interface IEmployeeService
 {
-    Task<Employee> AddAsync(CreateEmployeeRequest request);
+    Task<EmployeeResponse> AddAsync(CreateEmployeeRequest request);
 }

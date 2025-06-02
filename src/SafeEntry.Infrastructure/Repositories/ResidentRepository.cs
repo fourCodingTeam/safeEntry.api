@@ -9,27 +9,25 @@ public class ResidentRepository : IResidentRespository
     public ResidentRepository(AppDbContext ctx) => _ctx = ctx;
 
     public async Task<IEnumerable<Resident>> GetAllAsync()
-        => await _ctx.Persons
-            .OfType<Resident>()
+        => await _ctx.Residents
             .Include(r => r.Address)
             .AsNoTracking()
             .ToListAsync();
 
     public Task<Resident?> GetByIdAsync(int id)
-        => _ctx.Persons
-               .OfType<Resident>()
-               .Include(r => r.Address)
-               .SingleOrDefaultAsync(r => r.Id == id);
+        => _ctx.Residents
+            .Include(r => r.Address)
+            .SingleOrDefaultAsync(r => r.Id == id);
 
     public async Task AddAsync(Resident resident)
-{
-        _ctx.Persons.Add(resident);
+    {
+        _ctx.Residents.Add(resident);
         await _ctx.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(Resident resident)
     {
-        _ctx.Persons.Update(resident);
+        _ctx.Residents.Update(resident);
         await _ctx.SaveChangesAsync();
     }
 
@@ -37,7 +35,15 @@ public class ResidentRepository : IResidentRespository
     {
         var entity = await GetByIdAsync(id);
         if (entity is null) return;
-        _ctx.Persons.Remove(entity);
+        _ctx.Residents.Remove(entity);
         await _ctx.SaveChangesAsync();
+    }
+
+    public async Task<IEnumerable<Resident>> GetByAddressIdAsync(int addressId)
+    {
+        return await _ctx.Residents
+            .Include(r => r.Address)
+            .Where(r => r.Address.Id == addressId)
+            .ToListAsync();
     }
 }
