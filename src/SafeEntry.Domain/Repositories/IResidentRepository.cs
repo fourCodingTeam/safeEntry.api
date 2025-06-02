@@ -9,5 +9,6 @@ public interface IResidentRespository
     Task AddAsync(Resident resident);
     Task UpdateAsync(Resident resident);
     Task DeleteAsync(int id);
+    Task<IEnumerable<Resident>> GetByAddressIdAsync(int addressId);
 }
 

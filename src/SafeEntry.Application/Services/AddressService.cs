@@ -24,7 +24,7 @@ public class AddressService : IAddressService
         if (employee == null)
             throw new Exception("Employee not found");
 
-        return await _addressRepository.GetByCondominiumId(employee.Condominium.Id);
+        return await _addressRepository.GetByCondominiumId(employee.CondominiumId);
     }
 
     public async Task<Address> GetOrCreateAsync(int condominiumId, int homeNumber, string? homeStreet)

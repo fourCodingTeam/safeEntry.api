@@ -6,6 +6,7 @@ namespace SafeEntry.Infrastructure.Data;
 public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
     public DbSet<Person> Persons { get; set; }
     public DbSet<Resident> Residents { get; set; }
     public DbSet<Employee> Employees { get; set; }
@@ -22,25 +23,29 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Visitor>().ToTable("Visitors");
         modelBuilder.Entity<Address>().ToTable("Addresses");
         modelBuilder.Entity<Condominium>().ToTable("Condominiums");
-        modelBuilder.Entity<User>(b =>
-        {
-            b.ToTable("Users");
-            b.HasKey(u => u.Id);
 
-            b.OwnsOne(u => u.Password, pw =>
+        modelBuilder.Entity<User>(builder =>
+        {
+            builder.ToTable("Users");
+
+            builder.HasKey(u => u.Id);
+
+            builder.Property(u => u.Email)
+                   .IsRequired();
+
+            builder.OwnsOne(u => u.Password, pw =>
             {
                 pw.Property(p => p.Value)
                   .HasColumnName("PasswordHash")
                   .IsRequired();
             });
 
-            b.HasOne(u => u.Person)
-             .WithOne(p => p.User)
-             .HasForeignKey<User>(u => u.PersonId);
+            builder.HasOne(u => u.Person)
+                   .WithOne(p => p.User)
+                   .HasForeignKey<User>(u => u.PersonId)
+                   .IsRequired();
         });
 
         base.OnModelCreating(modelBuilder);
     }
-
 }
-

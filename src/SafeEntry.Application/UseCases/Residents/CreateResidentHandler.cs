@@ -32,7 +32,6 @@ namespace SafeEntry.Application.UseCases.Residents
             await _repo.AddAsync(resident);
 
             var user = new RegisterRequest(resident.Id, req.Email, req.Password, UserTypeEnum.Resident);
-
             await _registerHandler.Handle(user);
 
             return new ResidentResponse(

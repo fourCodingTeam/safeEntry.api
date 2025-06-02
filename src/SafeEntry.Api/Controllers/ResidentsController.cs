@@ -14,17 +14,20 @@ namespace SafeEntry.Api.Controllers
         private readonly ListResidentsHandler _list;
         private readonly UpdateResidentHandler _update;
         private readonly DeleteResidentHandler _delete;
+        private readonly ListResidentsByAddressIdHandler _listByAddressId;
 
         public ResidentsController(
             CreateResidentHandler create,
             ListResidentsHandler list,
             UpdateResidentHandler update,
-            DeleteResidentHandler delete)
+            DeleteResidentHandler delete,
+            ListResidentsByAddressIdHandler listByAddressId)
         {
             _create = create;
             _list = list;
             _update = update;
             _delete = delete;
+            _listByAddressId = listByAddressId;
         }
 
         [HttpGet]
@@ -57,5 +60,9 @@ namespace SafeEntry.Api.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
             => await _delete.Handle(id) ? NoContent() : NotFound();
+
+        [HttpGet("/address/{addressId:int}")]
+        public async Task<ActionResult<IEnumerable<ResidentResponse>>> GetByAddressId([FromRoute] int addressId)
+            => Ok(await _listByAddressId.Handle(addressId));
     }
 }
