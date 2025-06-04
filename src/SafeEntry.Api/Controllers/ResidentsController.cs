@@ -61,7 +61,7 @@ namespace SafeEntry.Api.Controllers
         public async Task<IActionResult> Delete(int id)
             => await _delete.Handle(id) ? NoContent() : NotFound();
 
-        [HttpGet("/address/{addressId:int}")]
+        [HttpGet("address/{addressId:int}")]
         public async Task<ActionResult<IEnumerable<ResidentResponse>>> GetByAddressId([FromRoute] int addressId)
             => Ok(await _listByAddressId.Handle(addressId));
     }

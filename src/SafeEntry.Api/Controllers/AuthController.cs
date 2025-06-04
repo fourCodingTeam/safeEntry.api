@@ -25,6 +25,7 @@ public class AuthController : ControllerBase
         _handler = login;
         _listUsers = listUsers;
     }
+
     [AllowAnonymous]
     [HttpPost("login")]
     public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest req)
