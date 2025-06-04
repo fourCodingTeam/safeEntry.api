@@ -42,7 +42,7 @@ public class ResidentRepository : IResidentRespository
     public async Task<IEnumerable<Resident>> GetByAddressIdAsync(int addressId)
     {
         return await _ctx.Residents
-            .Include(r => r.Address)
+            .Include(r => r.Address).ThenInclude(a => a.Condominium)
             .Where(r => r.Address.Id == addressId)
             .ToListAsync();
     }

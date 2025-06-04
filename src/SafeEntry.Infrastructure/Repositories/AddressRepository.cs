@@ -17,7 +17,7 @@ public class AddressRepository : IAddressRepository
     public async Task<IEnumerable<Address>> GetByCondominiumId(int condominiumId)
     {
         return await _context.Addresses
-            .Where(x => x.Id == condominiumId)
+            .Where(x => x.CondominiumId == condominiumId)
             .ToListAsync();
     }
 
