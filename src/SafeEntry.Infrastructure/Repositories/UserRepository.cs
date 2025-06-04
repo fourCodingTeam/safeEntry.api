@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SafeEntry.Domain.Repositories;
+using SafeEntry.Domain.Services;
 using SafeEntry.Infrastructure.Data;
 
 namespace SafeEntry.Infrastructure.Repositories
@@ -17,6 +18,7 @@ namespace SafeEntry.Infrastructure.Repositories
             _ctx.Users.Add(user);
             await _ctx.SaveChangesAsync();
         }
+
         public Task<IEnumerable<User>> GetAllAsync() =>
           _ctx.Users
               .Include(u => u.Person)
@@ -24,5 +26,16 @@ namespace SafeEntry.Infrastructure.Repositories
               .ToListAsync()
               .ContinueWith(t => (IEnumerable<User>)t.Result);
 
+        public async Task ChangePasswordAsync(Guid userId, string newPassword, IPasswordHasher hasher)
+        { 
+            var user = await _ctx.Users.SingleOrDefaultAsync(u => u.Id == userId)
+                ?? throw new Exception("User not found");
+
+            user.UpdatePassword(newPassword, hasher);
+
+            await _ctx.SaveChangesAsync();
+
+            return;
+        }
     }
 }

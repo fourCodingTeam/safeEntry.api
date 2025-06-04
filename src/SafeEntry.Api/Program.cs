@@ -11,6 +11,7 @@ using SafeEntry.Application.UseCases.ListUsers;
 using SafeEntry.Application.UseCases.Login;
 using SafeEntry.Application.UseCases.Register;
 using SafeEntry.Application.UseCases.Residents;
+using SafeEntry.Application.UseCases.UpdatePassword;
 using SafeEntry.Domain.Repositories;
 using SafeEntry.Domain.Services;
 using SafeEntry.Infrastructure.Data;
@@ -53,6 +54,7 @@ builder.Services.AddSingleton<IJwtService, JwtService>();
 builder.Services.AddScoped<LoginHandler>();
 builder.Services.AddScoped<RegisterHandler>();
 builder.Services.AddScoped<ListUsersHandler>();
+builder.Services.AddScoped<UpdatePasswordHandler>();
 
 var requireAuthPolicy = new AuthorizationPolicyBuilder()
     .RequireAuthenticatedUser()

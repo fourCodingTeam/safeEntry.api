@@ -33,6 +33,10 @@ public class LoginHandler
             throw new ApplicationException("Credenciais inválidas");
 
         var token = _jwt.GenerateToken(user.Id, request.Email);
-        return new LoginResponse(token, _jwt.GetExpiration());
+
+        if (user.IsFirstLogin)
+            return new LoginResponse(token, _jwt.GetExpiration(), true);
+
+        return new LoginResponse(token, _jwt.GetExpiration(), false);
     }
 }
