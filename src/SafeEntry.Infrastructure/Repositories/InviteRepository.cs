@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 using SafeEntry.Domain.Entities;
 using SafeEntry.Domain.Repositories;
 using SafeEntry.Infrastructure.Data;
@@ -22,19 +23,19 @@ public class InviteRepository : IInviteRepository
         await _invites.InsertOneAsync(mongoInvite);
     }
 
-    public async Task<bool> ExistsCodeForResidentAsync(int residentId, int code)
+    public async Task<bool> ExistsCodeForAddressAsync(int addressId, int code)
     {
         var filter = Builders<InviteMongoDbModel>.Filter.And(
-            Builders<InviteMongoDbModel>.Filter.Eq(x => x.ResidentId, residentId),
+            Builders<InviteMongoDbModel>.Filter.Eq(x => x.AddressId, addressId),
             Builders<InviteMongoDbModel>.Filter.Eq(x => x.Code, code)
         );
 
         return await _invites.Find(filter).AnyAsync();
     }
 
-    public async Task<bool> ValidateCodeAsync(int residentId, int visitorId, int code, DateTime dateNow)
+    public async Task<bool> ValidateCodeAsync(int addressId, int visitorId, int code, DateTime dateNow)
     {
-        var filter = BuildInviteFilter(residentId, visitorId, code);
+        var filter = BuildInviteFilter(addressId, visitorId, code);
 
         var invite = await _invites.Find(filter).FirstOrDefaultAsync();
 
@@ -50,9 +51,15 @@ public class InviteRepository : IInviteRepository
             .Select(mongoInvite => mongoInvite.ToDomain());
     }
 
-    public async Task<Invite> GetInviteByResidentIdAndVisitorIdAsync(int residentId, int visitorId, int code)
+    public async Task<IEnumerable<Invite>> GetInvitesByAddressIdAsync(int addressId)
     {
-        var filter = BuildInviteFilter(residentId, visitorId, code);
+        return (await _invites.Find(x => x.AddressId == addressId).ToListAsync())
+            .Select(mongoInvite => mongoInvite.ToDomain());
+    }
+
+    public async Task<Invite> GetInviteByAddressIdAndVisitorIdAsync(int addressId, int visitorId, int code)
+    {
+        var filter = BuildInviteFilter(addressId, visitorId, code);
 
         var mongoInvite = await _invites.Find(filter).FirstOrDefaultAsync();
 
@@ -62,13 +69,34 @@ public class InviteRepository : IInviteRepository
         return mongoInvite.ToDomain();
     }
 
-    private FilterDefinition<InviteMongoDbModel> BuildInviteFilter(int residentId, int visitorId, int code)
+    public async Task<Invite> GetInviteByResidentIdAndVisitorIdAsync(int residentId, int visitorId, int code)
     {
-        return Builders<InviteMongoDbModel>.Filter.And(
+        var filter = Builders<InviteMongoDbModel>.Filter.And(
             Builders<InviteMongoDbModel>.Filter.Eq(x => x.ResidentId, residentId),
             Builders<InviteMongoDbModel>.Filter.Eq(x => x.VisitorId, visitorId),
             Builders<InviteMongoDbModel>.Filter.Eq(x => x.Code, code)
         );
+
+        var mongoInvite = await _invites.Find(filter).FirstOrDefaultAsync();
+
+        if (mongoInvite == null)
+            throw new KeyNotFoundException("Invite not found");
+
+        return mongoInvite.ToDomain();
+    }
+
+    private FilterDefinition<InviteMongoDbModel> BuildInviteFilter(int addressId, int visitorId, int code)
+    {
+        return Builders<InviteMongoDbModel>.Filter.And(
+            Builders<InviteMongoDbModel>.Filter.Eq(x => x.AddressId, addressId),
+            Builders<InviteMongoDbModel>.Filter.Eq(x => x.VisitorId, visitorId),
+            Builders<InviteMongoDbModel>.Filter.Eq(x => x.Code, code)
+        );
+    }
+
+    public async Task<long> CountByAddressIdAsync(int addressId)
+    {
+        return await _invites.CountDocumentsAsync(x => x.AddressId == addressId);
     }
 }
 

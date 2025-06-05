@@ -11,6 +11,7 @@ namespace SafeEntry.Infrastructure.Models;
 
         public int Code { get; set; }
         public int ResidentId { get; set; }
+        public int AddressId { get; set; }
         public int VisitorId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime StartDate { get; set; }
@@ -29,13 +30,14 @@ namespace SafeEntry.Infrastructure.Models;
                 StartDate = invite.StartDate,
                 ExpirationDate = invite.ExpirationDate,
                 Justification = invite.Justification,
-                IsActive = invite.IsActive
+                IsActive = invite.IsActive,
+                AddressId = invite.AddressId
             };
         }
 
         public Invite ToDomain()
         {
-            return new Invite(Code, ResidentId, VisitorId, StartDate, ExpirationDate, Justification ?? string.Empty);
+            return new Invite(Code, ResidentId, AddressId, VisitorId, StartDate, ExpirationDate, Justification ?? string.Empty);
         }
     }
 

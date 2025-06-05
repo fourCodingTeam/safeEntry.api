@@ -21,8 +21,8 @@ namespace SafeEntry.Application.UseCases.Residents
             return new ResidentResponse(
                 existing.Id,
                 existing.Name,
-                existing.PhoneNumber
-                
+                existing.PhoneNumber,
+                existing.IsHomeOwner
             );
         }
     }
