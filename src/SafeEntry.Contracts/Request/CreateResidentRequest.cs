@@ -7,6 +7,7 @@
         string? HomeStreet,
         int HomeNumber,
         string Email,
-        string Password
+        string Password,
+        bool IsHomeOwner
     );
 }

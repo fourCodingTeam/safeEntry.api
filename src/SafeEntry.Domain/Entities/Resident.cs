@@ -3,13 +3,20 @@
 public class Resident : Person
 {
     public Address Address { get; protected set; } = null!;
-
+    public int AddressId { get; protected set; }
+    public bool IsHomeOwner { get; protected set; }
     protected Resident() { }
 
-    public Resident(string name, long phoneNumber, Address address)
+    public Resident(string name, long phoneNumber, Address address, bool isHomeOwner)
         : base(name, phoneNumber)
     {
         Address = address ?? throw new ArgumentNullException(nameof(address));
+        AddressId = address.Id;
+        IsHomeOwner = isHomeOwner;
     }
 
+    public void SetAsHouseOwner(bool isOwner)
+    {
+        IsHomeOwner = isOwner;
+    }
 }

@@ -21,8 +21,16 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Resident>().ToTable("Residents");
         modelBuilder.Entity<Employee>().ToTable("Employees");
         modelBuilder.Entity<Visitor>().ToTable("Visitors");
-        modelBuilder.Entity<Address>().ToTable("Addresses");
         modelBuilder.Entity<Condominium>().ToTable("Condominiums");
+
+        modelBuilder.Entity<Address>(builder =>
+        {
+            builder.ToTable("Addresses");
+
+            builder.HasOne(a => a.HouseOwner)
+                  .WithMany()
+                  .HasForeignKey(a => a.HouseOwnerId);
+        });
 
         modelBuilder.Entity<User>(builder =>
         {
