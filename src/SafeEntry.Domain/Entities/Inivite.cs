@@ -9,12 +9,13 @@ public class Invite
     public DateTime CreatedAt { get; protected set; }
     public DateTime StartDate { get; protected set; }
     public DateTime ExpirationDate { get; protected set; }
+    public int DaysToExpiration { get; protected set; }
     public string? Justification { get; protected set; } = null!;
     public bool IsActive { get; protected set; }
 
     protected Invite() { }
 
-    public Invite(int code, int residentId, int addressId, int visitorId, DateTime start, DateTime expiration, string justification)
+    public Invite(int code, int residentId, int addressId, int visitorId, DateTime start, DateTime expiration, int daysToExpiration, string justification)
     {
         Code = code;
         ResidentId = residentId;
@@ -24,6 +25,7 @@ public class Invite
         StartDate = start;
         ExpirationDate = expiration;
         Justification = justification;
+        DaysToExpiration = daysToExpiration;
         IsActive = true;
     }
 }
