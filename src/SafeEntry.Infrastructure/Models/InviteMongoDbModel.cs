@@ -17,6 +17,7 @@ public class InviteMongoDbModel
     public DateTime CreatedAt { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime ExpirationDate { get; set; }
+    public int DaysToExpiration { get; set; }
     public string? Justification { get; set; }
     public bool IsActive { get; set; }
 
@@ -31,6 +32,7 @@ public class InviteMongoDbModel
             CreatedAt = invite.CreatedAt,
             StartDate = invite.StartDate,
             ExpirationDate = invite.ExpirationDate,
+            DaysToExpiration = invite.DaysToExpiration,
             Justification = invite.Justification,
             IsActive = invite.IsActive,
             AddressId = invite.AddressId
@@ -39,7 +41,7 @@ public class InviteMongoDbModel
 
     public Invite ToDomain()
     {
-        return new Invite(Code, ResidentId, AddressId, VisitorId, VisitorName, StartDate, ExpirationDate, Justification ?? string.Empty);
+        return new Invite(Code, ResidentId, AddressId, VisitorId, VisitorName, StartDate, ExpirationDate, DaysToExpiration, Justification ?? string.Empty);
     }
 }
 
