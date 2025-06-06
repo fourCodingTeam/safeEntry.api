@@ -37,7 +37,8 @@ public class AddressService : IAddressService
                 resident.Id,
                 resident.Name,
                 resident.PhoneNumber,
-                resident.IsHomeOwner
+                resident.IsHomeOwner,
+                resident.StatusResident
             )).ToList()
         ));
     }

@@ -46,6 +46,8 @@ builder.Services.AddScoped<CreateResidentHandler>();
 builder.Services.AddScoped<UpdateResidentHandler>();
 builder.Services.AddScoped<DeleteResidentHandler>();
 builder.Services.AddScoped<ListResidentsHandler>();
+builder.Services.AddScoped<UpdadeResidentStatusHandler>();
+
 
 //Auth and User
 builder.Services.AddScoped<IUserRepository, UserRepository>();

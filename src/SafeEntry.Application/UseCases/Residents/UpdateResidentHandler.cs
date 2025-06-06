@@ -1,5 +1,6 @@
 ﻿using SafeEntry.Contracts.Request;
 using SafeEntry.Contracts.Responses;
+using SafeEntry.Domain.Entities;
 using SafeEntry.Domain.Repositories;
 
 namespace SafeEntry.Application.UseCases.Residents
@@ -22,7 +23,8 @@ namespace SafeEntry.Application.UseCases.Residents
                 existing.Id,
                 existing.Name,
                 existing.PhoneNumber,
-                existing.IsHomeOwner
+                existing.IsHomeOwner,
+                existing.StatusResident
             );
         }
     }

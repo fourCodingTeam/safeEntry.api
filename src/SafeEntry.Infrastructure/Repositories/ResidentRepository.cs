@@ -2,6 +2,7 @@
 using SafeEntry.Domain.Repositories;
 using SafeEntry.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using SafeEntry.Domain.Enum;
 
 public class ResidentRepository : IResidentRespository
 {

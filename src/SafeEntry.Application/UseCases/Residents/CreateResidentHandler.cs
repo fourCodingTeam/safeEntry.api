@@ -45,7 +45,8 @@ namespace SafeEntry.Application.UseCases.Residents
                 resident.Id,
                 resident.Name,
                 resident.PhoneNumber,
-                resident.IsHomeOwner
+                resident.IsHomeOwner,
+                resident.StatusResident
             );
         }
     }

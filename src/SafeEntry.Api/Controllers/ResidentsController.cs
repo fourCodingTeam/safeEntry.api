@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SafeEntry.Application.UseCases.ListResidents;
 using SafeEntry.Application.UseCases.Residents;
 using SafeEntry.Contracts.Request;
@@ -15,19 +16,22 @@ namespace SafeEntry.Api.Controllers
         private readonly UpdateResidentHandler _update;
         private readonly DeleteResidentHandler _delete;
         private readonly ListResidentsByAddressIdHandler _listByAddressId;
+        private readonly UpdadeResidentStatusHandler _updateStatus;
 
         public ResidentsController(
             CreateResidentHandler create,
             ListResidentsHandler list,
             UpdateResidentHandler update,
             DeleteResidentHandler delete,
-            ListResidentsByAddressIdHandler listByAddressId)
+            ListResidentsByAddressIdHandler listByAddressId,
+            UpdadeResidentStatusHandler updateStatus)
         {
             _create = create;
             _list = list;
             _update = update;
             _delete = delete;
             _listByAddressId = listByAddressId;
+            _updateStatus = updateStatus;
         }
 
         [HttpGet]
@@ -64,5 +68,12 @@ namespace SafeEntry.Api.Controllers
         [HttpGet("address/{addressId:int}")]
         public async Task<ActionResult<IEnumerable<ResidentResponse>>> GetByAddressId([FromRoute] int addressId)
             => Ok(await _listByAddressId.Handle(addressId));
+
+        [HttpPatch("status/{residentId}")]
+        public async Task<IActionResult> UpdateStatus(int residentId, [FromBody] UpdateResidentStatusRequest request)
+        {
+            var result = await _updateStatus.Handle(residentId,request);
+            return result is not null ? Ok(result) : NotFound();
+        }
     }
 }

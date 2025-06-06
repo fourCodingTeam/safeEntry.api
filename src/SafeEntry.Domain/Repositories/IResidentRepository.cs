@@ -1,4 +1,5 @@
 ﻿using SafeEntry.Domain.Entities;
+using SafeEntry.Domain.Enum;
 
 namespace SafeEntry.Domain.Repositories;
 
