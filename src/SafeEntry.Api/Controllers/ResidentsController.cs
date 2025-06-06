@@ -13,6 +13,7 @@ namespace SafeEntry.Api.Controllers
         private readonly CreateResidentHandler _create;
         private readonly ListResidentsHandler _list;
         private readonly UpdateResidentHandler _update;
+        private readonly UpdadeResidentStatusHandler updateStatus;
         private readonly DeleteResidentHandler _delete;
         private readonly ListResidentsByAddressIdHandler _listByAddressId;
 
@@ -64,5 +65,13 @@ namespace SafeEntry.Api.Controllers
         [HttpGet("address/{addressId:int}")]
         public async Task<ActionResult<IEnumerable<ResidentResponse>>> GetByAddressId([FromRoute] int addressId)
             => Ok(await _listByAddressId.Handle(addressId));
+
+        [HttpPatch("status/{residentId}")]
+        public async Task<IActionResult> UpdateStatus(int residentId, [FromBody] UpdateResidentStatusRequest request)
+        {
+            if (residentId != request.ResidentId) return BadRequest();
+            var result = await updateStatus.Handle(request);
+            return result is not null ? Ok(result) : NotFound();
+        }
     }
 }
