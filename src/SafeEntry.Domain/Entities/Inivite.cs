@@ -4,7 +4,9 @@ public class Invite
 {
     public int Code { get; protected set; }
     public int ResidentId { get; protected set; }
+    public int AddressId { get; protected set; }
     public int VisitorId {  get; protected set; }
+    public string VisitorName { get; protected set; }
     public DateTime CreatedAt { get; protected set; }
     public DateTime StartDate { get; protected set; }
     public DateTime ExpirationDate { get; protected set; }
@@ -13,11 +15,13 @@ public class Invite
 
     protected Invite() { }
 
-    public Invite(int code, int residentId, int visitorId, DateTime start, DateTime expiration, string justification)
+    public Invite(int code, int residentId, int addressId, int visitorId, string visitorName, DateTime start, DateTime expiration, string justification)
     {
         Code = code;
         ResidentId = residentId;
+        AddressId = addressId;
         VisitorId = visitorId;
+        VisitorName = visitorName;
         CreatedAt = DateTime.UtcNow;
         StartDate = start;
         ExpirationDate = expiration;

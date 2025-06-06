@@ -28,8 +28,15 @@ namespace SafeEntry.Application.UseCases.Residents
             if (address == null)
                 throw new ArgumentNullException(nameof(address));
 
-            var resident = new Resident(req.Name, req.PhoneNumber, address);
+            var resident = new Resident(req.Name, req.PhoneNumber, address, false);
+
+            address.Residents.Add(resident);
+
+            if (req.IsHomeOwner)
+                address.SetHouseOwner(resident);
+
             await _repo.AddAsync(resident);
+            await _addressService.UpdateAsync(address);
 
             var user = new RegisterRequest(resident.Id, req.Email, req.Password, UserTypeEnum.Resident);
             await _registerHandler.Handle(user);
@@ -37,7 +44,9 @@ namespace SafeEntry.Application.UseCases.Residents
             return new ResidentResponse(
                 resident.Id,
                 resident.Name,
-                resident.PhoneNumber
+                resident.PhoneNumber,
+                resident.IsHomeOwner,
+                resident.StatusResident
             );
         }
     }

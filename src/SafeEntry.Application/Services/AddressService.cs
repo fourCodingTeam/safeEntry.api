@@ -1,4 +1,5 @@
 ﻿using SafeEntry.Application.Interfaces;
+using SafeEntry.Contracts.Responses;
 using SafeEntry.Domain.Entities;
 using SafeEntry.Domain.Repositories;
 
@@ -17,14 +18,29 @@ public class AddressService : IAddressService
         _condominiumRepository = condominiumRepository;
     }
 
-    public async Task<IEnumerable<Address>> GetAddressesByEmployeeId(int employeeId)
+    public async Task<IEnumerable<AddressResponse>> GetAddressesByEmployeeId(int employeeId)
     {
         var employee = await _employeeRepository.GetEmployeeById(employeeId);
 
         if (employee == null)
             throw new Exception("Employee not found");
 
-        return await _addressRepository.GetByCondominiumId(employee.CondominiumId);
+        var addresses = await _addressRepository.GetByCondominiumId(employee.CondominiumId);
+
+        return addresses.Select(address => new AddressResponse(
+            address.Id,
+            address.HomeStreet,
+            address.HomeNumber,
+            address.Condominium.Name,
+            address.HouseOwnerId,
+            address.Residents.Select(resident => new ResidentResponse(
+                resident.Id,
+                resident.Name,
+                resident.PhoneNumber,
+                resident.IsHomeOwner,
+                resident.StatusResident
+            )).ToList()
+        ));
     }
 
     public async Task<Address> GetOrCreateAsync(int condominiumId, int homeNumber, string? homeStreet)
@@ -42,5 +58,10 @@ public class AddressService : IAddressService
         var newAddress = new Address(condominium, homeStreet, homeNumber);
 
         return await _addressRepository.AddAsync(newAddress);
+    }
+
+    public async Task UpdateAsync(Address address)
+    {
+        await _addressRepository.UpdateAsync(address);
     }
 }

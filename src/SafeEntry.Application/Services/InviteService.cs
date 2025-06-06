@@ -8,11 +8,13 @@ public class InviteService : IInviteService
 {
     private readonly IInviteRepository _inviteRepository;
     private readonly IVisitorRespository _visitorRepository;
+    private readonly IAddressRepository _addressRepository;
 
-    public InviteService(IInviteRepository inviteRepository, IVisitorRespository visitorRespository)
+    public InviteService(IInviteRepository inviteRepository, IVisitorRespository visitorRespository, IAddressRepository addressRepository)
     {
         _inviteRepository = inviteRepository;
         _visitorRepository = visitorRespository;
+        _addressRepository = addressRepository;
     }
 
     public async Task<int> GenerateCodeAsync(GenerateInviteRequest request)
@@ -24,18 +26,25 @@ public class InviteService : IInviteService
         var daysToExpiration = request.DaysToExpiration;
         var justification = request.Justification;
 
+        var address = await _addressRepository.GetByResidentIdAsync(residentId);
+
+        if (address == null)
+            throw new Exception("Address not found");
+
+        var addressId = address.Id;
+
         int code;
         do
         {
             code = new Random().Next(1000, 9999);
         }
-        while (await _inviteRepository.ExistsCodeForResidentAsync(residentId, code));
+        while (await _inviteRepository.ExistsCodeForAddressAsync(addressId, code));
 
-        var visitor = _visitorRepository.GetOrCreateAsync(visitorName, visitorPhoneNumber);
+        var visitor = await _visitorRepository.GetOrCreateAsync(visitorName, visitorPhoneNumber);
 
         var expiration = startDate.AddDays(daysToExpiration);
 
-        var entity = new Invite(code, residentId, visitor.Id, startDate, expiration, justification);
+        var entity = new Invite(code, residentId, addressId, visitor.Id, visitor.Name, startDate, expiration, justification);
 
         await _inviteRepository.AddAsync(entity);
 
@@ -44,12 +53,12 @@ public class InviteService : IInviteService
 
     public async Task<bool> ValidateCodeAsync(ValidateInviteRequest request)
     {
-        var residentId = request.ResidentId;
+        var addressId = request.AddressId;
         var vistorId = request.VisitorId;
         var code = request.Code;
         var dateNow = request.DateNow;
 
-        return await _inviteRepository.ValidateCodeAsync(residentId, vistorId, code, dateNow);
+        return await _inviteRepository.ValidateCodeAsync(addressId, vistorId, code, dateNow);
     }
 
     public async Task<Invite> GetInviteByResidentIdAndVisitorIdAsync(int residentId, int vistorId, int code)
@@ -57,8 +66,22 @@ public class InviteService : IInviteService
         return await _inviteRepository.GetInviteByResidentIdAndVisitorIdAsync(residentId, vistorId, code);
     }
 
+    public async Task<Invite> GetInviteByAddressIdAndVisitorIdAsync(int addressId, int vistorId, int code)
+    {
+        return await _inviteRepository.GetInviteByAddressIdAndVisitorIdAsync(addressId, vistorId, code);
+    }
+
+    public async Task<IEnumerable<Invite>> GetInvitesByAddressIdAsync(int addressId)
+    {
+        return await _inviteRepository.GetInvitesByAddressIdAsync(addressId);
+    }
+
     public async Task<IEnumerable<Invite>> GetInvitesByResidentIdAsync(int residentId)
     {
         return await _inviteRepository.GetInvitesByResidentIdAsync(residentId);
+    }
+    public async Task<long> CountInvitesByAddressIdAsync(int addressId)
+    {
+        return await _inviteRepository.CountByAddressIdAsync(addressId);
     }
 }

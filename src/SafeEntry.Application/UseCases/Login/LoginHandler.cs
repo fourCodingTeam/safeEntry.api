@@ -35,8 +35,8 @@ public class LoginHandler
         var token = _jwt.GenerateToken(user.Id, request.Email);
 
         if (user.IsFirstLogin)
-            return new LoginResponse(token, _jwt.GetExpiration(), true);
+            return new LoginResponse(token, _jwt.GetExpiration(), true, user.PersonId, user.Person.Name, user.UserType);
 
-        return new LoginResponse(token, _jwt.GetExpiration(), false);
+        return new LoginResponse(token, _jwt.GetExpiration(), false, user.PersonId, user.Person.Name, user.UserType);
     }
 }

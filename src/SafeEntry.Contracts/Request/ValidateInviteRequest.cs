@@ -2,15 +2,15 @@
 
 public class ValidateInviteRequest
 {
-    public ValidateInviteRequest(int residentId, int visitorId, int code) 
-    {
-        ResidentId = residentId;
-        VisitorId = visitorId;
-        Code = code;
-    }
-
-    public int ResidentId { get; set; }
+    public int AddressId { get; set; }
     public int VisitorId { get; set; }
     public int Code { get; set; }
     public DateTime DateNow { get; protected set; }
+
+    public ValidateInviteRequest(int addressId, int visitorId, int code) 
+    {
+        AddressId = addressId;
+        VisitorId = visitorId;
+        Code = code;
+    }
 }

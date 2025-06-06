@@ -1,5 +1,6 @@
 ﻿using SafeEntry.Contracts.Request;
 using SafeEntry.Contracts.Responses;
+using SafeEntry.Domain.Entities;
 using SafeEntry.Domain.Repositories;
 
 namespace SafeEntry.Application.UseCases.Residents
@@ -21,8 +22,9 @@ namespace SafeEntry.Application.UseCases.Residents
             return new ResidentResponse(
                 existing.Id,
                 existing.Name,
-                existing.PhoneNumber
-                
+                existing.PhoneNumber,
+                existing.IsHomeOwner,
+                existing.StatusResident
             );
         }
     }

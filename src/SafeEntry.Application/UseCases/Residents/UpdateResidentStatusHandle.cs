@@ -9,9 +9,9 @@ namespace SafeEntry.Application.UseCases.Residents
         private readonly IResidentRespository _repo;
         public UpdadeResidentStatusHandler(IResidentRespository repo) => _repo = repo;
 
-        public async Task<UpdateStatusResidentResponse?> Handle(UpdateResidentStatusRequest req)
+        public async Task<UpdateStatusResidentResponse?> Handle(int residentId,UpdateResidentStatusRequest req)
         {
-            var existing = await _repo.GetByIdAsync(req.ResidentId);
+            var existing = await _repo.GetByIdAsync(residentId);
             if (existing is null) return null;
 
             existing.UpdateResidentStatus(req.NewStatus);

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SafeEntry.Infrastructure.Data;
@@ -11,13 +12,15 @@ using SafeEntry.Infrastructure.Data;
 namespace SafeEntry.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250605041509_ResidentChanges")]
+    partial class ResidentChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("ProductVersion", "9.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -169,9 +172,6 @@ namespace SafeEntry.Infrastructure.Migrations
 
                     b.Property<bool>("IsHomeOwner")
                         .HasColumnType("boolean");
-
-                    b.Property<int>("StatusResident")
-                        .HasColumnType("integer");
 
                     b.HasIndex("AddressId");
 

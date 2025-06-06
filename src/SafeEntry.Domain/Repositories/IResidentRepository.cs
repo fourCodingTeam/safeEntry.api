@@ -11,6 +11,5 @@ public interface IResidentRespository
     Task UpdateAsync(Resident resident);
     Task DeleteAsync(int id);
     Task<IEnumerable<Resident>> GetByAddressIdAsync(int addressId);
-    Task UpdateStatus(int residentId, StatusResident statusResident);
 }
 

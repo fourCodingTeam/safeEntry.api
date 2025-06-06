@@ -4,38 +4,42 @@ using SafeEntry.Domain.Entities;
 
 namespace SafeEntry.Infrastructure.Models;
 
-    public class InviteMongoDbModel
+public class InviteMongoDbModel
+{
+    [BsonId]
+    public ObjectId MongoId { get; set; }
+
+    public int Code { get; set; }
+    public int ResidentId { get; set; }
+    public int AddressId { get; set; }
+    public int VisitorId { get; set; }
+    public string VisitorName { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime ExpirationDate { get; set; }
+    public string? Justification { get; set; }
+    public bool IsActive { get; set; }
+
+    public static InviteMongoDbModel FromDomain(Invite invite)
     {
-        [BsonId]
-        public ObjectId MongoId { get; set; }
-
-        public int Code { get; set; }
-        public int ResidentId { get; set; }
-        public int VisitorId { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime ExpirationDate { get; set; }
-        public string? Justification { get; set; }
-        public bool IsActive { get; set; }
-
-        public static InviteMongoDbModel FromDomain(Invite invite)
+        return new InviteMongoDbModel
         {
-            return new InviteMongoDbModel
-            {
-                Code = invite.Code,
-                ResidentId = invite.ResidentId,
-                VisitorId = invite.VisitorId,
-                CreatedAt = invite.CreatedAt,
-                StartDate = invite.StartDate,
-                ExpirationDate = invite.ExpirationDate,
-                Justification = invite.Justification,
-                IsActive = invite.IsActive
-            };
-        }
-
-        public Invite ToDomain()
-        {
-            return new Invite(Code, ResidentId, VisitorId, StartDate, ExpirationDate, Justification ?? string.Empty);
-        }
+            Code = invite.Code,
+            ResidentId = invite.ResidentId,
+            VisitorId = invite.VisitorId,
+            VisitorName = invite.VisitorName,
+            CreatedAt = invite.CreatedAt,
+            StartDate = invite.StartDate,
+            ExpirationDate = invite.ExpirationDate,
+            Justification = invite.Justification,
+            IsActive = invite.IsActive,
+            AddressId = invite.AddressId
+        };
     }
+
+    public Invite ToDomain()
+    {
+        return new Invite(Code, ResidentId, AddressId, VisitorId, VisitorName, StartDate, ExpirationDate, Justification ?? string.Empty);
+    }
+}
 

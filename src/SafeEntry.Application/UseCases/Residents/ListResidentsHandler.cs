@@ -17,7 +17,9 @@ namespace SafeEntry.Application.UseCases.ListResidents
                 .Select(r => new ResidentResponse(
                     r.Id,
                     r.Name,
-                    r.PhoneNumber
+                    r.PhoneNumber,
+                    r.IsHomeOwner,
+                    r.StatusResident
                 ));
         }
     }
