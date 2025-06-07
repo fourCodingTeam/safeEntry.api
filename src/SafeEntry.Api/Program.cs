@@ -154,7 +154,6 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();  // Força redirecionamento de HTTP para HTTPS
 app.UseAuthentication();    // Middleware de autenticação
 app.UseAuthorization();     // Middleware de autorização
 app.UseCors("AllowAll");
