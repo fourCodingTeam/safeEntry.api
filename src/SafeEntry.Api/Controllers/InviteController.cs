@@ -139,4 +139,40 @@ public class InviteController : ControllerBase
         var count = await _inviteService.CountInvitesByAddressIdAsync(addressId);
         return Ok(new { Count = count });
     }
+
+    /// <summary>
+    /// Activates an invite for a specific address, visitor, and code.
+    /// </summary>
+    /// <param name="addressId">The address's ID.</param>
+    /// <param name="visitorId">The visitor's ID.</param>
+    /// <param name="code">The invite code.</param>
+    /// <returns>True if the invite was activated; otherwise, not found.</returns>
+    [HttpPut("activate/{addressId}/{visitorId}/{code}")]
+    public async Task<IActionResult> ActiveteInvite([FromRoute] int addressId, [FromRoute] int visitorId, [FromRoute] int code)
+    {
+        var result = await _inviteService.ActivateInviteAsync(addressId, visitorId, code);
+
+        if (result == false)
+            return NotFound("Invite Not Found");
+
+        return Ok();
+    }
+
+    /// <summary>
+    /// Deactivates an invite for a specific address, visitor, and code.
+    /// </summary>
+    /// <param name="addressId">The address's ID.</param>
+    /// <param name="visitorId">The visitor's ID.</param>
+    /// <param name="code">The invite code.</param>
+    /// <returns>True if the invite was deactivated; otherwise, not found.</returns>
+    [HttpPut("deactivate/{addressId}/{visitorId}/{code}")]
+    public async Task<IActionResult> DeactiveteInvite([FromRoute] int addressId, [FromRoute] int visitorId, [FromRoute] int code)
+    {
+        var result = await _inviteService.DeactivateInviteAsync(addressId, visitorId, code);
+
+        if (result == false)
+            return NotFound("Invite Not Found");
+
+        return Ok();
+    }
 }
