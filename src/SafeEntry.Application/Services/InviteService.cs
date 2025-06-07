@@ -84,4 +84,13 @@ public class InviteService : IInviteService
     {
         return await _inviteRepository.CountByAddressIdAsync(addressId);
     }
+    public async Task<bool> ActivateInviteAsync(int addressId, int vistorId, int code)
+    {
+        return await _inviteRepository.ActivateInviteAsync(addressId, vistorId, code);
+    }
+
+    public async Task<bool> DeactivateInviteAsync(int residentId, int vistorId, int code)
+    {
+        return await _inviteRepository.DeactivateInviteAsync(residentId, vistorId, code);
+    }
 }

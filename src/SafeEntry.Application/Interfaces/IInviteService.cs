@@ -12,4 +12,6 @@ public interface IInviteService
     Task<Invite> GetInviteByResidentIdAndVisitorIdAsync(int residentId, int vistorId, int code);
     Task<Invite> GetInviteByAddressIdAndVisitorIdAsync(int addressId, int vistorId, int code);
     Task<long> CountInvitesByAddressIdAsync(int addressId);
+    Task<bool> ActivateInviteAsync(int addressId, int vistorId, int code);
+    Task<bool> DeactivateInviteAsync(int addressId, int vistorId, int code);
 }

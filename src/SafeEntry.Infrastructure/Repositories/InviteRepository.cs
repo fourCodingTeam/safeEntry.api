@@ -23,6 +23,15 @@ public class InviteRepository : IInviteRepository
         await _invites.InsertOneAsync(mongoInvite);
     }
 
+    private FilterDefinition<InviteMongoDbModel> BuildInviteFilter(int addressId, int visitorId, int code)
+    {
+        return Builders<InviteMongoDbModel>.Filter.And(
+            Builders<InviteMongoDbModel>.Filter.Eq(x => x.AddressId, addressId),
+            Builders<InviteMongoDbModel>.Filter.Eq(x => x.VisitorId, visitorId),
+            Builders<InviteMongoDbModel>.Filter.Eq(x => x.Code, code)
+        );
+    }
+
     public async Task<bool> ExistsCodeForAddressAsync(int addressId, int code)
     {
         var filter = Builders<InviteMongoDbModel>.Filter.And(
@@ -85,18 +94,31 @@ public class InviteRepository : IInviteRepository
         return mongoInvite.ToDomain();
     }
 
-    private FilterDefinition<InviteMongoDbModel> BuildInviteFilter(int addressId, int visitorId, int code)
-    {
-        return Builders<InviteMongoDbModel>.Filter.And(
-            Builders<InviteMongoDbModel>.Filter.Eq(x => x.AddressId, addressId),
-            Builders<InviteMongoDbModel>.Filter.Eq(x => x.VisitorId, visitorId),
-            Builders<InviteMongoDbModel>.Filter.Eq(x => x.Code, code)
-        );
-    }
-
     public async Task<long> CountByAddressIdAsync(int addressId)
     {
         return await _invites.CountDocumentsAsync(x => x.AddressId == addressId);
+    }
+
+    public async Task<bool> ActivateInviteAsync(int addressId, int visitorId, int code)
+    {
+        var filter = BuildInviteFilter(addressId, visitorId, code);
+
+        var update = Builders<InviteMongoDbModel>.Update.Set(i => i.IsActive, true);
+
+        var result = await _invites.UpdateOneAsync(filter, update);
+
+        return result.ModifiedCount > 0;
+    }
+
+    public async Task<bool> DeactivateInviteAsync(int addressId, int visitorId, int code)
+    {
+        var filter = BuildInviteFilter(addressId, visitorId, code);
+
+        var update = Builders<InviteMongoDbModel>.Update.Set(i => i.IsActive, false);
+
+        var result = await _invites.UpdateOneAsync(filter, update);
+
+        return result.ModifiedCount > 0;
     }
 }
 
