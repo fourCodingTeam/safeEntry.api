@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafeEntry.Api", "src\SafeEntry.Api\SafeEntry.Api.csproj", "{924C8700-05A1-478A-9816-524ABDAB2783}"
 EndProject
@@ -95,5 +99,8 @@ Global
 		{0F6D7F07-6CFD-4F4A-A3F3-A88C1EDAB218} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{1D8EFA24-8433-4138-B723-3DDE2A23B7B0} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{6EB7ECE3-EA86-47A9-A16A-79265DF49B32} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {659C1242-DF3F-49EE-B58E-98A42E45CFF0}
 	EndGlobalSection
 EndGlobal
