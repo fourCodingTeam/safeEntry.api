@@ -9,9 +9,9 @@ public interface IInviteService
     Task<bool> ValidateCodeAsync(ValidateInviteRequest request);
     Task<IEnumerable<Invite>> GetInvitesByResidentIdAsync(int residentId);
     Task<IEnumerable<Invite>> GetInvitesByAddressIdAsync(int addressId);
-    Task<Invite> GetInviteByResidentIdAndVisitorIdAsync(int residentId, int vistorId, int code);
-    Task<Invite> GetInviteByAddressIdAndVisitorIdAsync(int addressId, int vistorId, int code);
+    Task<Invite> GetInviteByResidentIdAndVisitorIdAsync(int residentId, int visitorId, int code);
+    Task<Invite> GetInviteByAddressIdAndVisitorIdAsync(int addressId, int visitorId, int code);
     Task<long> CountInvitesByAddressIdAsync(int addressId);
-    Task<bool> ActivateInviteAsync(int addressId, int vistorId, int code);
-    Task<bool> DeactivateInviteAsync(int addressId, int vistorId, int code);
+    Task<bool> ActivateInviteAsync(int addressId, int visitorId, int code);
+    Task<bool> DeactivateInviteAsync(int addressId, int visitorId, int code);
 }

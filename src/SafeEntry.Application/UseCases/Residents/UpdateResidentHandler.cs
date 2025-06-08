@@ -7,8 +7,8 @@ namespace SafeEntry.Application.UseCases.Residents
 {
     public class UpdateResidentHandler
     {
-        private readonly IResidentRespository _repo;
-        public UpdateResidentHandler(IResidentRespository repo) => _repo = repo;
+        private readonly IResidentRepository _repo;
+        public UpdateResidentHandler(IResidentRepository repo) => _repo = repo;
 
         public async Task<ResidentResponse?> Handle(UpdateResidentRequest req)
         {

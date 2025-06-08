@@ -3,7 +3,7 @@ using SafeEntry.Domain.Enum;
 
 namespace SafeEntry.Domain.Repositories;
 
-public interface IResidentRespository
+public interface IResidentRepository
 {
     Task<Resident> GetByIdAsync(int id);
     Task<IEnumerable<Resident>> GetAllAsync();

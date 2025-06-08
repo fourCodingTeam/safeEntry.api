@@ -6,8 +6,8 @@ namespace SafeEntry.Application.UseCases.ListResidents
 {
     public class ListResidentsByAddressIdHandler
     {
-        private readonly IResidentRespository _repo;
-        public ListResidentsByAddressIdHandler(IResidentRespository repo)
+        private readonly IResidentRepository _repo;
+        public ListResidentsByAddressIdHandler(IResidentRepository repo)
             => _repo = repo;
 
         public async Task<IEnumerable<Resident>> Handle(int addressId)

@@ -14,7 +14,7 @@ public class EmployeeRepository : IEmployeeRepository
         _context = context;
     }
 
-    public async Task<Employee?> GetEmployeeById(int id)
+    public async Task<Employee?> GetEmployeeByIdAsync(int id)
     {
         return await _context.Employees
             .Include(e => e.Condominium)

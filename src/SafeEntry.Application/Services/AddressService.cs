@@ -20,7 +20,7 @@ public class AddressService : IAddressService
 
     public async Task<IEnumerable<AddressResponse>> GetAddressesByEmployeeId(int employeeId)
     {
-        var employee = await _employeeRepository.GetEmployeeById(employeeId);
+        var employee = await _employeeRepository.GetEmployeeByIdAsync(employeeId);
 
         if (employee == null)
             throw new Exception("Employee not found");
@@ -58,6 +58,17 @@ public class AddressService : IAddressService
         var newAddress = new Address(condominium, homeStreet, homeNumber);
 
         return await _addressRepository.AddAsync(newAddress);
+    }
+
+    public async Task<Address> GetByResidentIdAsync(int residentId)
+    {
+        var response = await _addressRepository.GetByResidentIdAsync(residentId);
+
+        if (response == null)
+            throw new ArgumentNullException("Condominium not Found");
+
+        return response;
+
     }
 
     public async Task UpdateAsync(Address address)

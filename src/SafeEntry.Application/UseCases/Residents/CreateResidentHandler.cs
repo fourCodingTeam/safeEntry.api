@@ -10,11 +10,11 @@ namespace SafeEntry.Application.UseCases.Residents
 {
     public class CreateResidentHandler
     {
-        private readonly IResidentRespository _repo;
+        private readonly IResidentRepository _repo;
         private readonly IAddressService _addressService;
         private readonly RegisterHandler _registerHandler;
 
-        public CreateResidentHandler(IResidentRespository repo, IAddressService addressService, RegisterHandler registerHandler)
+        public CreateResidentHandler(IResidentRepository repo, IAddressService addressService, RegisterHandler registerHandler)
         {
             _repo = repo;
             _addressService = addressService;

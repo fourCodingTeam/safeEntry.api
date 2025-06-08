@@ -23,9 +23,12 @@ var builder = WebApplication.CreateBuilder(args);
 //Invite
 builder.Services.AddScoped<IInviteRepository, InviteRepository>();
 builder.Services.AddScoped<IInviteService, InviteService>();
+builder.Services.AddScoped<IInviteValidationHistoryService, InviteValidationHistoryService>();
+builder.Services.AddScoped<IResidentRepository, ResidentRepository>();
+builder.Services.AddScoped<IInviteValidationHistoryRepository, InviteValidationHistoryRepository>();
 
 //Visitor
-builder.Services.AddScoped<IVisitorRespository, VisitorRepository>();
+builder.Services.AddScoped<IVisitorRepository, VisitorRepository>();
 
 //Address
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
@@ -39,7 +42,7 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<ICondominiumRepository, CondominiumRepository>();
 
 //Resident
-builder.Services.AddScoped<IResidentRespository, ResidentRepository>();
+builder.Services.AddScoped<IResidentRepository, ResidentRepository>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<ListResidentsByAddressIdHandler>();
 builder.Services.AddScoped<CreateResidentHandler>();
@@ -47,6 +50,7 @@ builder.Services.AddScoped<UpdateResidentHandler>();
 builder.Services.AddScoped<DeleteResidentHandler>();
 builder.Services.AddScoped<ListResidentsHandler>();
 builder.Services.AddScoped<UpdadeResidentStatusHandler>();
+builder.Services.AddScoped<ListResidentsByIdHandler>();
 
 
 //Auth and User
@@ -161,6 +165,5 @@ app.MapControllers();       // Mapeia os controllers
 
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 app.Urls.Add($"http://*:{port}");
-
 
 app.Run();

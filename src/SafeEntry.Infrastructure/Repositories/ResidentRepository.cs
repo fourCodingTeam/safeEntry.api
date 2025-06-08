@@ -4,7 +4,7 @@ using SafeEntry.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using SafeEntry.Domain.Enum;
 
-public class ResidentRepository : IResidentRespository
+public class ResidentRepository : IResidentRepository
 {
     private readonly AppDbContext _ctx;
     public ResidentRepository(AppDbContext ctx) => _ctx = ctx;

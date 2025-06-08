@@ -2,7 +2,7 @@
 
 namespace SafeEntry.Domain.Repositories;
 
-public interface IVisitorRespository
+public interface IVisitorRepository
 {
     Task<Visitor?> GetByNameAndPhoneAsync(string name, long phoneNumber);
     Task<Visitor> AddAsync(Visitor visitor);
