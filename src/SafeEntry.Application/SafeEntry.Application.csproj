@@ -5,6 +5,11 @@
     <ProjectReference Include="..\SafeEntry.Contracts\SafeEntry.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCases\InviteHistory\" />
+    <Folder Include="UseCases\NewFolder\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

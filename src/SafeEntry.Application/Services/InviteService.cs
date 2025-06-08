@@ -1,4 +1,5 @@
-﻿using SafeEntry.Contracts.Request;
+﻿using SafeEntry.Application.Interfaces;
+using SafeEntry.Contracts.Request;
 using SafeEntry.Domain.Entities;
 using SafeEntry.Domain.Repositories;
 
@@ -7,14 +8,16 @@ namespace SafeEntry.Domain.Services;
 public class InviteService : IInviteService
 {
     private readonly IInviteRepository _inviteRepository;
-    private readonly IVisitorRespository _visitorRepository;
+    private readonly IVisitorRepository _visitorRepository;
     private readonly IAddressRepository _addressRepository;
+    private readonly IInviteValidationHistoryService _historyService;
 
-    public InviteService(IInviteRepository inviteRepository, IVisitorRespository visitorRespository, IAddressRepository addressRepository)
+    public InviteService(IInviteRepository inviteRepository, IVisitorRepository visitorRepository, IAddressRepository addressRepository, IInviteValidationHistoryService historyService )
     {
         _inviteRepository = inviteRepository;
-        _visitorRepository = visitorRespository;
+        _visitorRepository = visitorRepository;
         _addressRepository = addressRepository;
+        _historyService = historyService;
     }
 
     public async Task<int> GenerateCodeAsync(GenerateInviteRequest request)
@@ -54,21 +57,34 @@ public class InviteService : IInviteService
     public async Task<bool> ValidateCodeAsync(ValidateInviteRequest request)
     {
         var addressId = request.AddressId;
-        var vistorId = request.VisitorId;
+        var visitorId = request.VisitorId;
+        var employeeId = request.EmployeeId;
         var code = request.Code;
         var dateNow = request.DateNow;
 
-        return await _inviteRepository.ValidateCodeAsync(addressId, vistorId, code, dateNow);
+        var approval = await _inviteRepository.ValidateCodeAsync(addressId, visitorId, code, dateNow);
+
+        var history = new InviteHistoryRequest(
+            addressId,
+            visitorId,
+            employeeId,
+            code,
+            dateNow,
+            approval);
+
+        await _historyService.AddAsync(history);
+
+        return approval;
     }
 
-    public async Task<Invite> GetInviteByResidentIdAndVisitorIdAsync(int residentId, int vistorId, int code)
+    public async Task<Invite> GetInviteByResidentIdAndVisitorIdAsync(int residentId, int visitorId, int code)
     {
-        return await _inviteRepository.GetInviteByResidentIdAndVisitorIdAsync(residentId, vistorId, code);
+        return await _inviteRepository.GetInviteByResidentIdAndVisitorIdAsync(residentId, visitorId, code);
     }
 
-    public async Task<Invite> GetInviteByAddressIdAndVisitorIdAsync(int addressId, int vistorId, int code)
+    public async Task<Invite> GetInviteByAddressIdAndVisitorIdAsync(int addressId, int visitorId, int code)
     {
-        return await _inviteRepository.GetInviteByAddressIdAndVisitorIdAsync(addressId, vistorId, code);
+        return await _inviteRepository.GetInviteByAddressIdAndVisitorIdAsync(addressId, visitorId, code);
     }
 
     public async Task<IEnumerable<Invite>> GetInvitesByAddressIdAsync(int addressId)
@@ -84,13 +100,13 @@ public class InviteService : IInviteService
     {
         return await _inviteRepository.CountByAddressIdAsync(addressId);
     }
-    public async Task<bool> ActivateInviteAsync(int addressId, int vistorId, int code)
+    public async Task<bool> ActivateInviteAsync(int addressId, int visitorId, int code)
     {
-        return await _inviteRepository.ActivateInviteAsync(addressId, vistorId, code);
+        return await _inviteRepository.ActivateInviteAsync(addressId, visitorId, code);
     }
 
-    public async Task<bool> DeactivateInviteAsync(int residentId, int vistorId, int code)
+    public async Task<bool> DeactivateInviteAsync(int residentId, int visitorId, int code)
     {
-        return await _inviteRepository.DeactivateInviteAsync(residentId, vistorId, code);
+        return await _inviteRepository.DeactivateInviteAsync(residentId, visitorId, code);
     }
 }

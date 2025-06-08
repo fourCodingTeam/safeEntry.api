@@ -36,4 +36,15 @@ public class EmployeeService : IEmployeeService
 
         return new EmployeeResponse(employee.Id, employee.Name, employee.Position, condominium.Name);
     }
+
+    public async Task<Employee> GetEmployeeByIdAsync(int employeeId)
+    { 
+        var employee = await _employeeRepository.GetEmployeeByIdAsync(employeeId);
+
+        if (employee == null)
+            throw new Exception("Employee not found");
+
+        return employee;
+    }
+
 }

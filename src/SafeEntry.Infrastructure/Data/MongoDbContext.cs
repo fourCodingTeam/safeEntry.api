@@ -15,4 +15,5 @@ public class MongoDbContext
     }
 
         public IMongoCollection<InviteMongoDbModel> Invites => _database.GetCollection<InviteMongoDbModel>("Invites");
+        public IMongoCollection<InviteValidationHistoryMongoDbModel> InvitesValidateHistory => _database.GetCollection<InviteValidationHistoryMongoDbModel>("InvitesValidateHistory");
 }

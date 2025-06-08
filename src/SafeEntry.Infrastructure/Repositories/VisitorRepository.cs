@@ -5,7 +5,7 @@ using SafeEntry.Infrastructure.Data;
 
 namespace SafeEntry.Infrastructure.Repositories;
 
-public class VisitorRepository : IVisitorRespository
+public class VisitorRepository : IVisitorRepository
 {
     private readonly AppDbContext _context;
 
