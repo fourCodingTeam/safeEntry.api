@@ -41,7 +41,7 @@ public class InviteMongoDbModel
 
     public Invite ToDomain()
     {
-        return new Invite(Code, ResidentId, AddressId, VisitorId, VisitorName, StartDate, ExpirationDate, DaysToExpiration, Justification ?? string.Empty);
+        return new Invite(Code, ResidentId, AddressId, VisitorId, VisitorName, StartDate, ExpirationDate, DaysToExpiration, Justification ?? string.Empty, IsActive);
     }
 }
 
