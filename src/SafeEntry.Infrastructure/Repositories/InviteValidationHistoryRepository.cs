@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
 using SafeEntry.Domain.Entities;
 using SafeEntry.Domain.Repositories;
@@ -45,5 +46,13 @@ public class InviteValidationHistoryRepository : IInviteValidationHistoryReposit
             .SortByDescending(x => x.ValidatedAt)
             .ToListAsync())
             .Select(history => history.ToDomain());
+    }
+
+    public async Task<InviteValidationHistory> GetInviteHistorybyIdAsync(string id)
+    {
+        var filter = Builders<InviteValidationHistoryMongoDbModel>.Filter.Eq(x => x.MongoId, ObjectId.Parse(id));
+        var result = await _inviteHistory.Find(filter).FirstOrDefaultAsync();
+
+        return result.ToDomain();
     }
 }

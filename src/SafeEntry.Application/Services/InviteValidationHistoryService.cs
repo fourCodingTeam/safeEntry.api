@@ -87,4 +87,14 @@ public class InviteValidationHistoryService : IInviteValidationHistoryService
 
         return invites;
     }
+
+    public async Task<InviteValidationHistory> GetInviteHistorybyIdAsync(string id)
+    {
+        var inviteHistory = await _historyRepository.GetInviteHistorybyIdAsync(id);
+
+        if(inviteHistory == null)
+            throw new Exception("Invite not found");
+
+        return inviteHistory;
+    }
 }

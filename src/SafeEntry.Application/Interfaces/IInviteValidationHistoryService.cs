@@ -8,5 +8,6 @@ namespace SafeEntry.Application.Interfaces
         Task AddAsync(InviteHistoryRequest request);
         Task<IEnumerable<InviteValidationHistory>> GetAllAsync(int condominiumId);
         Task<IEnumerable<InviteValidationHistory>> GetLastSevenDaysAsync(int condominiumId);
+        Task<InviteValidationHistory> GetInviteHistorybyIdAsync(string inviteHistoryId);
     }
 }

@@ -2,6 +2,7 @@
 
 public class InviteValidationHistory
 {
+    public string? Id { get; protected set; }
     public int AddressId { get; protected set; }
     public int CondominiumId { get; protected set; }
     public string HomeDescription { get; protected set; } = null!;
@@ -46,11 +47,24 @@ public class InviteValidationHistory
         Approval = approval;
     }
 
-    protected InviteValidationHistory() { }
-
-    public InviteValidationHistory(int addressId, string homeDescription, string createdByResidentName, int visitorId, string visitorName, int employeeId, string employeeName, int code, DateTime inviteExpirationDate, DateTime validatedAt, bool approval)
+    public InviteValidationHistory(
+       string id,
+       int addressId,
+       int condominiumId,
+       string homeDescription,
+       string createdByResidentName,
+       int visitorId,
+       string visitorName,
+       int employeeId,
+       string employeeName,
+       int code,
+       DateTime inviteExpirationDate,
+       DateTime validatedAt,
+       bool approval)
     {
+        Id = id;
         AddressId = addressId;
+        CondominiumId = condominiumId;
         HomeDescription = homeDescription;
         CreatedByResidentName = createdByResidentName;
         VisitorId = visitorId;
@@ -62,4 +76,6 @@ public class InviteValidationHistory
         ValidatedAt = validatedAt;
         Approval = approval;
     }
+
+    protected InviteValidationHistory() { }
 }
