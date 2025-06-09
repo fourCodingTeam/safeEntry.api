@@ -51,7 +51,9 @@ public class InviteRepository : IInviteRepository
         if (invite == null)
             throw new Exception("Invite not found");
 
-        return invite.IsActive && invite.ExpirationDate > dateNow;
+
+
+        return invite.IsActive && invite.ExpirationDate.Date >= dateNow.Date;
     }
 
     public async Task<IEnumerable<Invite>> GetInvitesByResidentIdAsync(int residentId)
