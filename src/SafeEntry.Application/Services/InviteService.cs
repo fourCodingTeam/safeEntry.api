@@ -47,7 +47,7 @@ public class InviteService : IInviteService
 
         var expiration = startDate.AddDays(daysToExpiration);
 
-        var entity = new Invite(code, residentId, addressId, visitor.Id, visitor.Name, startDate, expiration, daysToExpiration, justification);
+        var entity = new Invite(code, residentId, addressId, visitor.Id, visitor.Name, startDate, expiration, daysToExpiration, justification, true);
 
         await _inviteRepository.AddAsync(entity);
 

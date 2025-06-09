@@ -16,7 +16,7 @@ public class Invite
 
     protected Invite() { }
 
-    public Invite(int code, int residentId, int addressId, int visitorId, string visitorName, DateTime start, DateTime expiration, int daysToExpiration, string justification)
+    public Invite(int code, int residentId, int addressId, int visitorId, string visitorName, DateTime start, DateTime expiration, int daysToExpiration, string justification, bool isActive)
     {
         Code = code;
         ResidentId = residentId;
@@ -28,6 +28,6 @@ public class Invite
         ExpirationDate = expiration;
         DaysToExpiration = daysToExpiration;
         Justification = justification;
-        IsActive = true;
+        IsActive = isActive;
     }
 }
