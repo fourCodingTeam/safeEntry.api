@@ -13,7 +13,7 @@ public class InviteHistoryController : ControllerBase
     private readonly IInviteValidationHistoryService _historyService;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="InviteHistoryController"/> class.
+    /// Initializes a new instance of the InviteHistoryController class.
     /// </summary>
     /// <param name="historyService">
     /// The service responsible for invite validation history operations.
@@ -26,8 +26,11 @@ public class InviteHistoryController : ControllerBase
     /// <summary>
     /// Gets all invite validation history records for a condominium.
     /// </summary>
-    /// <param name="condominiumId">The condominium's ID.</param>
-    /// <returns>A list of invite validation history records for the condominium.</returns>
+    /// <param name="condominiumId">The unique identifier of the condominium.</param>
+    /// <returns>
+    /// 200 OK with a list of invite validation history records if found;
+    /// 404 Not Found if no records exist.
+    /// </returns>
     [HttpGet("condominium/{condominiumId}")]
     public async Task<IActionResult> GetAll([FromRoute] int condominiumId)
     {
@@ -42,8 +45,11 @@ public class InviteHistoryController : ControllerBase
     /// <summary>
     /// Gets invite validation history records for the last seven days for a condominium.
     /// </summary>
-    /// <param name="condominiumId">The condominium's ID.</param>
-    /// <returns>A list of invite validation history records for the last seven days.</returns>
+    /// <param name="condominiumId">The unique identifier of the condominium.</param>
+    /// <returns>
+    /// 200 OK with a list of invite validation history records from the last seven days if found;
+    /// 404 Not Found if no records exist.
+    /// </returns>
     [HttpGet("condominium/lastweek/{condominiumId}")]
     public async Task<IActionResult> GetLastSevenDays([FromRoute] int condominiumId)
     {
@@ -53,5 +59,24 @@ public class InviteHistoryController : ControllerBase
             return NotFound("No invites found for the condominium");
 
         return Ok(invites);
+    }
+
+    /// <summary>
+    /// Gets a specific invite validation history record by its unique identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the invite validation history record.</param>
+    /// <returns>
+    /// 200 OK with the invite validation history record if found;
+    /// 404 Not Found if the record does not exist.
+    /// </returns>
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetInviteHistoryById([FromRoute] string id)
+    {
+        var invite = await _historyService.GetInviteHistorybyIdAsync(id);
+
+        if (invite == null)
+            return NotFound("No invite history found for the provided ID");
+
+        return Ok(invite);
     }
 }

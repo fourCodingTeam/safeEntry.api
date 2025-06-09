@@ -43,8 +43,12 @@ public class InviteValidationHistoryMongoDbModel
 
     public InviteValidationHistory ToDomain()
     {
+       string Id = MongoId.ToString();
+
         return new InviteValidationHistory(
+            Id,
             AddressId,
+            CondominiumId,
             HomeDescription,
             CreatedByResidentName,
             VisitorId,

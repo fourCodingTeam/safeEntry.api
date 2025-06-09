@@ -28,6 +28,7 @@ public class AddressRepository : IAddressRepository
     {
         return await _context.Addresses
             .Include(a => a.Residents)
+            .Include(a => a.Condominium)
             .FirstOrDefaultAsync(a => a.Residents.Any(r => r.Id == residentId));
     }
 
@@ -35,6 +36,7 @@ public class AddressRepository : IAddressRepository
     {
         return await _context.Addresses
             .Include(a => a.Residents)
+            .Include(a => a.Condominium)
             .FirstOrDefaultAsync(a => a.Condominium.Id == condominiumId && a.HomeNumber == homeNumber);
     }
 

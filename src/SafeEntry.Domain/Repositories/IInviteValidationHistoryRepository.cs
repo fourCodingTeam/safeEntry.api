@@ -7,4 +7,5 @@ public interface IInviteValidationHistoryRepository
     Task AddAsync(InviteValidationHistory inviteHistory);
     Task<IEnumerable<InviteValidationHistory>> GetAllAsync(int condominiumId);
     Task<IEnumerable<InviteValidationHistory>> GetLastSevenDaysAsync(int condominiumId);
+    Task<InviteValidationHistory> GetInviteHistorybyIdAsync(string mongoInviteHistoryId);
 }
