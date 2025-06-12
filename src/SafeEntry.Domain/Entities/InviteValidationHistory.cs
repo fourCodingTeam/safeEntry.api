@@ -6,6 +6,8 @@ public class InviteValidationHistory
     public int AddressId { get; protected set; }
     public int CondominiumId { get; protected set; }
     public string HomeDescription { get; protected set; } = null!;
+
+    public int CreatedByResidentId { get; protected set; }
     public string CreatedByResidentName { get; protected set; } = null!;
 
     public int VisitorId { get; protected set; }
@@ -23,6 +25,7 @@ public class InviteValidationHistory
         int addressId,
         int condominiumId,
         string homeDescription,
+        int createdByResidentId,
         string createdByResidentName,
         int visitorId,
         string visitorName,
@@ -37,6 +40,7 @@ public class InviteValidationHistory
         CondominiumId = condominiumId; 
         HomeDescription = homeDescription;
         CreatedByResidentName = createdByResidentName;
+        CreatedByResidentId = createdByResidentId;
         VisitorId = visitorId;
         VisitorName = visitorName;
         EmployeeId = employeeId;
@@ -52,6 +56,7 @@ public class InviteValidationHistory
        int addressId,
        int condominiumId,
        string homeDescription,
+       int createdByResidentId,
        string createdByResidentName,
        int visitorId,
        string visitorName,
@@ -66,6 +71,7 @@ public class InviteValidationHistory
         AddressId = addressId;
         CondominiumId = condominiumId;
         HomeDescription = homeDescription;
+         CreatedByResidentId = createdByResidentId;
         CreatedByResidentName = createdByResidentName;
         VisitorId = visitorId;
         VisitorName = visitorName;

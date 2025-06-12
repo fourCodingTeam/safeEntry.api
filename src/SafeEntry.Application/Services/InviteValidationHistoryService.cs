@@ -53,6 +53,7 @@ public class InviteValidationHistoryService : IInviteValidationHistoryService
             addressId, 
             address.CondominiumId, 
             homeDescription, 
+            resident.Id,
             resident.Name, 
             visitorId, 
             invite.VisitorName,

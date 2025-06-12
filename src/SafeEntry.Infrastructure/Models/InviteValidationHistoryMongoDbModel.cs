@@ -12,6 +12,7 @@ public class InviteValidationHistoryMongoDbModel
     public int CondominiumId { get; set; }
     public int AddressId { get; set; }
     public string HomeDescription { get; set; } = null!;
+    public int CreatedByResidentId { get; set; }
     public string CreatedByResidentName { get; set; } = null!;
     public int VisitorId { get; set; }
     public string VisitorName { get; set; } = null!;
@@ -29,6 +30,7 @@ public class InviteValidationHistoryMongoDbModel
             AddressId = history.AddressId,
             CondominiumId = history.CondominiumId,
             HomeDescription = history.HomeDescription,
+            CreatedByResidentId = history.CreatedByResidentId,
             CreatedByResidentName = history.CreatedByResidentName,
             VisitorId = history.VisitorId,
             VisitorName = history.VisitorName,
@@ -50,6 +52,7 @@ public class InviteValidationHistoryMongoDbModel
             AddressId,
             CondominiumId,
             HomeDescription,
+            CreatedByResidentId,
             CreatedByResidentName,
             VisitorId,
             VisitorName,
