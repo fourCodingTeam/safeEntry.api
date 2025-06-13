@@ -167,9 +167,13 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseRouting();
+
+app.UseCors("AllowAll");
+
 app.UseAuthentication();    // Middleware de autenticação
 app.UseAuthorization();     // Middleware de autorização
-app.UseCors("AllowAll");
+
 app.MapControllers();       // Mapeia os controllers
 
 app.Run();
