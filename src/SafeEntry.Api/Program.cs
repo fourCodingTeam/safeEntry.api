@@ -145,7 +145,14 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.WebHost.UseUrls($"http://+:{Environment.GetEnvironmentVariable("PORT") ?? "8080"}");
+// Obter a porta da variável de ambiente ou usar 8080 como padrão
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+
+// Configura para usar essa porta no Kestrel
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(int.Parse(port));
+});
 
 var app = builder.Build();
 
