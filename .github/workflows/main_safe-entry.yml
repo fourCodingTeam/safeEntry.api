@@ -18,7 +18,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0'
+          dotnet-version: '8.0.x' # Use a stable version
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
@@ -27,7 +27,10 @@ jobs:
         run: dotnet publish -c Release -o publish
 
       - name: Zip published app
-        run: zip -r app.zip publish
+        run: cd publish && zip -r ../app.zip .
+
+      - name: List zip contents
+        run: unzip -l app.zip
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -50,6 +53,9 @@ jobs:
         with:
           name: .net-app
 
+      - name: List files in deploy folder
+        run: ls -la .net-app
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -63,4 +69,4 @@ jobs:
         with:
           app-name: 'safe-entry'
           slot-name: 'Production'
-          package: app.zip
+          package: .net-app/app.zip
