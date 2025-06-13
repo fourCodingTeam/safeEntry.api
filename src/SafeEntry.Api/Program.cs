@@ -1,4 +1,3 @@
-using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +16,7 @@ using SafeEntry.Domain.Services;
 using SafeEntry.Infrastructure.Data;
 using SafeEntry.Infrastructure.Repositories;
 using SafeEntry.Infrastructure.Security;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -145,14 +145,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Obter a porta da variável de ambiente ou usar 8080 como padrão
-var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-
-// Configura para usar essa porta no Kestrel
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenAnyIP(int.Parse(port));
-});
+builder.WebHost.UseUrls("http://*:" + Environment.GetEnvironmentVariable("PORT") ?? "80");
 
 var app = builder.Build();
 
@@ -166,6 +159,12 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty; // Swagger será exibido na raiz (http://localhost:5000/)
     });
 }
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor |
+                       Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto
+});
 
 app.UseRouting();
 
