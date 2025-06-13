@@ -145,6 +145,8 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.WebHost.UseUrls($"http://+:{Environment.GetEnvironmentVariable("PORT") ?? "8080"}");
+
 var app = builder.Build();
 
 // Configura o pipeline de requisição HTTP
