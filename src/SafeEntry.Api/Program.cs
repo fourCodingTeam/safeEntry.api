@@ -163,7 +163,4 @@ app.UseAuthorization();     // Middleware de autorização
 app.UseCors("AllowAll");
 app.MapControllers();       // Mapeia os controllers
 
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
-app.Urls.Add($"http://*:{port}");
-
 app.Run();
