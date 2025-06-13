@@ -40,7 +40,6 @@ jobs:
     needs: build
     environment:
       name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write
       contents: read
@@ -63,4 +62,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'safe-entry'
-          slot-name: '
+          slot-name: 'Production'
+          package: app.zip
