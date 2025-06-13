@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="web.config" CopyToPublishDirectory="Always" />
+    <None Update="web.config" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
     <ProjectReference Include="..\SafeEntry.Application\SafeEntry.Application.csproj" />
     <ProjectReference Include="..\SafeEntry.Infrastructure\SafeEntry.Infrastructure.csproj" />
     <ProjectReference Include="..\SafeEntry.Contracts\SafeEntry.Contracts.csproj" />
