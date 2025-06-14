@@ -122,5 +122,18 @@ public class InviteRepository : IInviteRepository
 
         return result.ModifiedCount > 0;
     }
+
+    public async Task<long> DeactivateExpiredInvitesAsync(DateTime date)
+    {
+        var filter = Builders<InviteMongoDbModel>.Filter
+            .Where(x => x.ExpirationDate < date && x.IsActive);
+
+        var update = Builders<InviteMongoDbModel>.Update
+            .Set(x => x.IsActive, false);
+
+        var result = await _invites.UpdateManyAsync(filter, update);
+
+        return result.ModifiedCount;
+    }
 }
 

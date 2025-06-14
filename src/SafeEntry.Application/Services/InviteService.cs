@@ -109,4 +109,11 @@ public class InviteService : IInviteService
     {
         return await _inviteRepository.DeactivateInviteAsync(residentId, visitorId, code);
     }
+
+    public async Task<int> DeactivateExpiredInvitesAsync(DateTime today)
+    {
+        var modified = await _inviteRepository.DeactivateExpiredInvitesAsync(today);
+
+        return (int)modified;
+    }
 }

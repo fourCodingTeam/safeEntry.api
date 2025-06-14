@@ -14,4 +14,5 @@ public interface IInviteRepository
     Task<long> CountByAddressIdAsync(int addressId);
     Task<bool> ActivateInviteAsync(int residentId, int visitorId, int code);
     Task<bool> DeactivateInviteAsync(int residentId, int visitorId, int code);
+    Task<long> DeactivateExpiredInvitesAsync(DateTime date);
 }
