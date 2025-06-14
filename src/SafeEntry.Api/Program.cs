@@ -25,7 +25,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IInviteRepository, InviteRepository>();
 builder.Services.AddScoped<IInviteService, InviteService>();
 builder.Services.AddScoped<IInviteValidationHistoryService, InviteValidationHistoryService>();
-builder.Services.AddScoped<IResidentRepository, ResidentRepository>();
 builder.Services.AddScoped<IInviteValidationHistoryRepository, InviteValidationHistoryRepository>();
 
 //Visitor

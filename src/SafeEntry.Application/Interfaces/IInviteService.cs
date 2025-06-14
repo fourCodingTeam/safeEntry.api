@@ -14,4 +14,5 @@ public interface IInviteService
     Task<long> CountInvitesByAddressIdAsync(int addressId);
     Task<bool> ActivateInviteAsync(int addressId, int visitorId, int code);
     Task<bool> DeactivateInviteAsync(int addressId, int visitorId, int code);
+    Task<int> DeactivateExpiredInvitesAsync(DateTime today);
 }
