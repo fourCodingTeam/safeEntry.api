@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -19,14 +20,6 @@ using SafeEntry.Infrastructure.Security;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
-var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
-builder.WebHost.UseUrls($"http://*:{port}");
-builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-    serverOptions.ListenAnyIP(int.Parse(port));
-});
-
 
 //Invite
 builder.Services.AddScoped<IInviteRepository, InviteRepository>();
@@ -158,6 +151,11 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.All
+});
+
 // Configura o pipeline de requisição HTTP
 if (app.Environment.IsDevelopment())
 {
@@ -172,13 +170,16 @@ else
 {
     app.UseExceptionHandler("/error");
     app.UseHsts();
+
+    app.Use(async (context, next) =>
+    {
+        context.Response.Headers.TryAdd("X-Azure-App", "SafeEntry");
+        await next();
+    });
 }
 
-app.UseForwardedHeaders(new ForwardedHeadersOptions
-{
-    ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor |
-                       Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto
-});
+
+
 
 app.UseRouting();
 app.UseCors("AllowAll");
@@ -186,6 +187,6 @@ app.UseAuthentication();    // Middleware de autenticação
 app.UseAuthorization();     // Middleware de autorização
 
 app.MapControllers();       // Mapeia os controllers
-app.MapHealthChecks("/health");
+app.MapHealthChecks("/");
 
 app.Run();
