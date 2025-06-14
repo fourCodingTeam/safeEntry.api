@@ -20,6 +20,14 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
+builder.WebHost.UseUrls($"http://*:{port}");
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(int.Parse(port));
+});
+
+
 //Invite
 builder.Services.AddScoped<IInviteRepository, InviteRepository>();
 builder.Services.AddScoped<IInviteService, InviteService>();
@@ -145,7 +153,8 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.WebHost.UseUrls("http://*:" + Environment.GetEnvironmentVariable("PORT") ?? "80");
+// Health Checks
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -159,6 +168,11 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty; // Swagger será exibido na raiz (http://localhost:5000/)
     });
 }
+else
+{
+    app.UseExceptionHandler("/error");
+    app.UseHsts();
+}
 
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
@@ -167,12 +181,11 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 });
 
 app.UseRouting();
-
 app.UseCors("AllowAll");
-
 app.UseAuthentication();    // Middleware de autenticação
 app.UseAuthorization();     // Middleware de autorização
 
 app.MapControllers();       // Mapeia os controllers
+app.MapHealthChecks("/health");
 
 app.Run();
