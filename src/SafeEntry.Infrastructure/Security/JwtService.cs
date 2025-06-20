@@ -15,7 +15,7 @@ namespace SafeEntry.Infrastructure.Security
         public JwtService(IConfiguration cfg)
         {
             _cfg = cfg;
-            _expires = DateTime.UtcNow.AddHours(2);
+            _expires = DateTime.UtcNow.AddHours(15);
         }
 
         public string GenerateToken(Guid userId, string email)
