@@ -186,6 +186,6 @@ app.UseAuthentication();    // Middleware de autenticação
 app.UseAuthorization();     // Middleware de autorização
 
 app.MapControllers();       // Mapeia os controllers
-app.MapHealthChecks("/");
+app.MapHealthChecks("/health");
 
 app.Run();

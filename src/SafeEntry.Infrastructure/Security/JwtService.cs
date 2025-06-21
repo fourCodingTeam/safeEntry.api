@@ -10,16 +10,17 @@ namespace SafeEntry.Infrastructure.Security
     public class JwtService : IJwtService
     {
         private readonly IConfiguration _cfg;
-        private readonly DateTime _expires;
 
         public JwtService(IConfiguration cfg)
         {
             _cfg = cfg;
-            _expires = DateTime.UtcNow.AddHours(15);
         }
+
 
         public string GenerateToken(Guid userId, string email)
         {
+            var expires = DateTime.UtcNow.AddHours(2);
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_cfg["Jwt:Key"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -33,13 +34,13 @@ namespace SafeEntry.Infrastructure.Security
                 issuer: _cfg["Jwt:Issuer"],
                 audience: _cfg["Jwt:Audience"],
                 claims: claims,
-                expires: _expires,
+                expires: expires,
                 signingCredentials: creds
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public DateTime GetExpiration() => _expires;
+        public DateTime GetExpiration() => DateTime.UtcNow.AddHours(2);
     }
 }
